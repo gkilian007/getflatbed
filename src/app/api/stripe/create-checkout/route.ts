@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
       payment_method_types: ['card'],
       line_items: [{ price: priceId, quantity: 1 }],
       mode: 'subscription',
-      success_url: `${appUrl}/dashboard?success=true`,
+      success_url: `${appUrl}/welcome?premium=true`,
       cancel_url: `${appUrl}/pricing?canceled=true`,
       metadata: { supabase_user_id: user.id },
       subscription_data: {

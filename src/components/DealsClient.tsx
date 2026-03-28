@@ -22,6 +22,8 @@ interface DealsClientProps {
   deals: Deal[];
   isLoggedIn: boolean;
   isPremium: boolean;
+  userOrigins?: string[];
+  userDestinations?: string[];
 }
 
 const dealTypeLabels: Record<string, string> = {
@@ -59,12 +61,29 @@ function getSavingsFilter(deal: Deal, filter: string) {
   return pct >= threshold;
 }
 
-export default function DealsClient({ deals, isLoggedIn, isPremium }: DealsClientProps) {
+export default function DealsClient({
+  deals,
+  isLoggedIn,
+  isPremium,
+  userOrigins = [],
+  userDestinations = [],
+}: DealsClientProps) {
   const [filterType, setFilterType] = useState("Todos");
   const [filterOrigin, setFilterOrigin] = useState("Todos");
   const [minSavings, setMinSavings] = useState("Cualquier");
+  const [showOnlyMine, setShowOnlyMine] = useState(false);
   const [loginEmail, setLoginEmail] = useState("");
   const [loginSubmitted, setLoginSubmitted] = useState(false);
+
+  const hasUserPrefs = userOrigins.length > 0 || userDestinations.length > 0;
+
+  const isDealMatch = (deal: Deal) => {
+    if (!hasUserPrefs) return false;
+    return (
+      userOrigins.includes(deal.origin) ||
+      userDestinations.includes(deal.destination)
+    );
+  };
 
   const handleLoginSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,18 +91,26 @@ export default function DealsClient({ deals, isLoggedIn, isPremium }: DealsClien
     setLoginEmail("");
   };
 
+  // Apply filters
   const filtered = deals.filter((d) => {
     if (!getDealTypeFilter(d, filterType)) return false;
     if (filterOrigin !== "Todos" && d.origin !== filterOrigin) return false;
     if (!getSavingsFilter(d, minSavings)) return false;
+    if (showOnlyMine && !isDealMatch(d)) return false;
     return true;
   });
 
-  // Visible: show all deals to everyone (but blur premium-only for non-premium)
-  // Lock wall: show only if not logged in (for last half)
-  const showLoginWall = !isLoggedIn && filtered.length > 3;
-  const visibleDeals = showLoginWall ? filtered.slice(0, 3) : filtered;
-  const hiddenDeals = showLoginWall ? filtered.slice(3) : [];
+  // Sort: matching deals first, then by date
+  const sorted = [...filtered].sort((a, b) => {
+    const aMatch = isDealMatch(a) ? 1 : 0;
+    const bMatch = isDealMatch(b) ? 1 : 0;
+    if (bMatch !== aMatch) return bMatch - aMatch;
+    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+  });
+
+  const showLoginWall = !isLoggedIn && sorted.length > 3;
+  const visibleDeals = showLoginWall ? sorted.slice(0, 3) : sorted;
+  const hiddenDeals = showLoginWall ? sorted.slice(3) : [];
 
   return (
     <div className="pt-20">
@@ -157,11 +184,12 @@ export default function DealsClient({ deals, isLoggedIn, isPremium }: DealsClien
 
           {/* MAIN CONTENT */}
           <main className="flex-1 min-w-0">
-            <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
               <div>
                 <h1 className="text-3xl font-black">Ofertas Actuales</h1>
                 <p className="text-gray-500 text-sm mt-1">
-                  {filtered.length} ofertas activas
+                  {sorted.length} oferta{sorted.length !== 1 ? "s" : ""} activa
+                  {sorted.length !== 1 ? "s" : ""}
                 </p>
               </div>
               <div className="flex items-center gap-2 text-xs bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 px-4 py-2 rounded-full">
@@ -170,21 +198,45 @@ export default function DealsClient({ deals, isLoggedIn, isPremium }: DealsClien
               </div>
             </div>
 
-            {filtered.length === 0 ? (
+            {/* "Mis destinos" quick filter (premium users with prefs) */}
+            {hasUserPrefs && isPremium && (
+              <div className="flex items-center gap-2 mb-6 flex-wrap">
+                <button
+                  onClick={() => setShowOnlyMine(!showOnlyMine)}
+                  className={`text-xs font-bold px-4 py-2 rounded-full border transition-all ${
+                    showOnlyMine
+                      ? "gradient-gold text-black border-transparent"
+                      : "border-yellow-500/30 text-yellow-500 hover:bg-yellow-500/5"
+                  }`}
+                >
+                  ⭐ Mis destinos
+                </button>
+                {showOnlyMine && (
+                  <button
+                    onClick={() => setShowOnlyMine(false)}
+                    className="text-xs text-gray-500 hover:text-gray-300 transition"
+                  >
+                    Ver todas
+                  </button>
+                )}
+              </div>
+            )}
+
+            {sorted.length === 0 ? (
               <div className="deal-card rounded-xl p-12 text-center text-gray-500">
                 <div className="text-4xl mb-3">✈️</div>
                 <p>Ninguna oferta coincide con tus filtros. Prueba a ajustarlos.</p>
               </div>
             ) : (
               <>
-                {/* Visible deals */}
                 <div className="grid md:grid-cols-2 gap-5 mb-5">
                   {visibleDeals.map((deal) => {
                     const needsUpgrade = deal.is_premium_only && !isPremium && isLoggedIn;
+                    const isMatch = isDealMatch(deal);
                     return (
                       <div key={deal.id} className="deal-card rounded-2xl p-5 relative">
                         <div className={needsUpgrade ? "blur-sm select-none" : ""}>
-                          <div className="flex items-center gap-2 mb-3">
+                          <div className="flex items-center gap-2 mb-3 flex-wrap">
                             <span
                               className={`text-xs font-bold px-2 py-0.5 rounded-full border ${
                                 dealTypeColors[deal.type] || "text-gray-400 bg-white/5 border-white/10"
@@ -195,6 +247,18 @@ export default function DealsClient({ deals, isLoggedIn, isPremium }: DealsClien
                             {deal.is_premium_only && (
                               <span className="text-xs gradient-gold text-black font-bold px-2 py-0.5 rounded-full">
                                 Premium
+                              </span>
+                            )}
+                            {isMatch && isPremium && (
+                              <span
+                                className="text-xs font-bold px-2 py-0.5 rounded-full"
+                                style={{
+                                  background: "rgba(245,200,66,0.15)",
+                                  color: "#F5C842",
+                                  border: "1px solid rgba(245,200,66,0.35)",
+                                }}
+                              >
+                                ⭐ Para ti
                               </span>
                             )}
                           </div>
@@ -249,13 +313,15 @@ export default function DealsClient({ deals, isLoggedIn, isPremium }: DealsClien
                   })}
                 </div>
 
-                {/* Login wall for non-logged-in users */}
+                {/* Login wall */}
                 {showLoginWall && hiddenDeals.length > 0 && (
                   <div className="relative">
                     <div className="grid md:grid-cols-2 gap-5 opacity-40 pointer-events-none select-none">
                       {hiddenDeals.map((deal) => (
                         <div key={deal.id} className="deal-card rounded-2xl p-5">
-                          <div className="text-lg font-black">{deal.origin} → {deal.destination}</div>
+                          <div className="text-lg font-black">
+                            {deal.origin} → {deal.destination}
+                          </div>
                           <div className="text-gray-400 text-sm">{deal.airline}</div>
                         </div>
                       ))}
@@ -279,7 +345,10 @@ export default function DealsClient({ deals, isLoggedIn, isPremium }: DealsClien
                           </p>
                         ) : (
                           <>
-                            <form onSubmit={handleLoginSubmit} className="flex flex-col gap-3 mb-4">
+                            <form
+                              onSubmit={handleLoginSubmit}
+                              className="flex flex-col gap-3 mb-4"
+                            >
                               <input
                                 type="email"
                                 placeholder="tu@email.com"
