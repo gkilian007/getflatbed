@@ -27,9 +27,9 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-sm text-gray-500 mb-6">
-              Fly smart, fly business.
+              Vuela inteligente, vuela en business.
               <br />
-              The only deal alert service built for Spanish-speaking travelers.
+              El único servicio de alertas de vuelos hecho para viajeros de habla hispana.
             </p>
             {/* Social */}
             <div className="flex gap-4 text-sm text-gray-500">
@@ -47,7 +47,7 @@ export default function Footer() {
 
           {/* Product links */}
           <div>
-            <h4 className="text-sm font-bold text-white mb-4">Product</h4>
+            <h4 className="text-sm font-bold text-white mb-4">Producto</h4>
             <ul className="space-y-3 text-sm text-gray-500">
               <li>
                 <Link href="/deals" className="hover:text-white transition">
@@ -56,17 +56,17 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/guides" className="hover:text-white transition">
-                  Guides
+                  Guías
                 </Link>
               </li>
               <li>
                 <Link href="/pricing" className="hover:text-white transition">
-                  Pricing
+                  Precios
                 </Link>
               </li>
               <li>
                 <Link href="/how-it-works" className="hover:text-white transition">
-                  How it works
+                  Cómo funciona
                 </Link>
               </li>
             </ul>
@@ -74,11 +74,11 @@ export default function Footer() {
 
           {/* Company links */}
           <div>
-            <h4 className="text-sm font-bold text-white mb-4">Company</h4>
+            <h4 className="text-sm font-bold text-white mb-4">Empresa</h4>
             <ul className="space-y-3 text-sm text-gray-500">
               <li>
                 <Link href="/about" className="hover:text-white transition">
-                  About
+                  Quiénes somos
                 </Link>
               </li>
               <li>
@@ -86,7 +86,7 @@ export default function Footer() {
                   href="mailto:hello@getflatbed.com"
                   className="hover:text-white transition"
                 >
-                  Contact
+                  Contacto
                 </a>
               </li>
             </ul>
@@ -101,7 +101,7 @@ export default function Footer() {
                   href="/legal/privacy"
                   className="hover:text-white transition"
                 >
-                  Privacy
+                  Privacidad
                 </Link>
               </li>
               <li>
@@ -109,7 +109,7 @@ export default function Footer() {
                   href="/legal/terms"
                   className="hover:text-white transition"
                 >
-                  Terms
+                  Términos
                 </Link>
               </li>
             </ul>
@@ -120,20 +120,20 @@ export default function Footer() {
         <div className="border-t border-white/5 pt-10 mb-10">
           <div className="max-w-md">
             <h4 className="text-sm font-bold text-white mb-1">
-              Get deals in your inbox
+              Recibe ofertas en tu bandeja de entrada
             </h4>
             <p className="text-xs text-gray-600 mb-4">
-              Free weekly digest. No spam, ever.
+              Resumen semanal gratuito. Sin spam, nunca.
             </p>
             {subscribed ? (
               <p className="text-sm text-green-400 font-semibold">
-                You&apos;re subscribed! Check your inbox soon.
+                ¡Suscrito! Revisa tu bandeja de entrada pronto.
               </p>
             ) : (
               <form onSubmit={handleSubscribe} className="flex gap-3">
                 <input
                   type="email"
-                  placeholder="your@email.com"
+                  placeholder="tu@email.com"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -143,7 +143,7 @@ export default function Footer() {
                   type="submit"
                   className="gradient-gold text-black text-sm font-bold px-5 py-2.5 rounded-lg hover:opacity-90 transition whitespace-nowrap"
                 >
-                  Subscribe
+                  Suscribirme
                 </button>
               </form>
             )}
@@ -153,10 +153,10 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-gray-600">
-            © 2026 GetFlatbed · Fly smart, fly business
+            © 2026 GetFlatbed · Vuela inteligente, vuela en business
           </p>
           <p className="text-xs text-gray-700">
-            We find the deals. You book the flight. That&apos;s it.
+            Nosotros encontramos las ofertas. Tú reservas el vuelo. Así de simple.
           </p>
         </div>
       </div>

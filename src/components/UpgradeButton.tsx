@@ -38,7 +38,7 @@ export default function UpgradeButton({ priceId }: UpgradeButtonProps) {
       disabled={loading}
       className="gradient-gold text-black font-black px-6 py-3 rounded-xl hover:opacity-90 transition disabled:opacity-60 whitespace-nowrap"
     >
-      {loading ? "Loading..." : "Upgrade — €9/month →"}
+      {loading ? "Cargando..." : "Mejorar — €9/mes →"}
     </button>
   );
 }

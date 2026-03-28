@@ -23,16 +23,16 @@ export default function Navbar() {
         {/* Desktop nav links */}
         <div className="hidden md:flex items-center gap-8 text-sm text-gray-400">
           <Link href="/how-it-works" className="hover:text-white transition">
-            How it works
+            Cómo funciona
           </Link>
           <Link href="/deals" className="hover:text-white transition">
             Deals
           </Link>
           <Link href="/pricing" className="hover:text-white transition">
-            Pricing
+            Precios
           </Link>
           <Link href="/guides" className="hover:text-white transition">
-            Guides
+            Guías
           </Link>
         </div>
 
@@ -42,12 +42,12 @@ export default function Navbar() {
             href="/register"
             className="gradient-gold text-black text-sm font-bold px-5 py-2.5 rounded-full hover:opacity-90 transition"
           >
-            Get early access
+            Acceso anticipado
           </Link>
           <button
             className="md:hidden text-gray-400 hover:text-white"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
+            aria-label="Abrir menú"
           >
             <svg
               className="w-6 h-6"
@@ -83,7 +83,7 @@ export default function Navbar() {
             className="hover:text-white transition"
             onClick={() => setMobileMenuOpen(false)}
           >
-            How it works
+            Cómo funciona
           </Link>
           <Link
             href="/deals"
@@ -97,14 +97,14 @@ export default function Navbar() {
             className="hover:text-white transition"
             onClick={() => setMobileMenuOpen(false)}
           >
-            Pricing
+            Precios
           </Link>
           <Link
             href="/guides"
             className="hover:text-white transition"
             onClick={() => setMobileMenuOpen(false)}
           >
-            Guides
+            Guías
           </Link>
         </div>
       )}

@@ -18,59 +18,59 @@ export default function HomePage() {
   const sampleDeals = [
     {
       type: "error-fare" as const,
-      typeBadge: "⚡ Error fare",
+      typeBadge: "⚡ Tarifa error",
       from: "Madrid",
-      to: "New York",
-      airline: "Iberia Business · JFK nonstop",
-      originalPrice: "€3,180",
+      to: "Nueva York",
+      airline: "Iberia Business · JFK directo",
+      originalPrice: "€3.180",
       dealPrice: "€290",
-      savings: "91% off",
+      savings: "91% dto.",
       dates: "Jun–Sep 2025",
-      duration: "Lasted 3h",
-      status: "✅ Ticketed",
-      timestamp: "48h ago",
+      duration: "Duró 3h",
+      status: "✅ Emitido",
+      timestamp: "hace 48h",
     },
     {
       type: "miles-deal" as const,
-      typeBadge: "🏆 Miles deal",
+      typeBadge: "🏆 Oferta con millas",
       from: "Barcelona",
-      to: "Tokyo",
-      airline: "Turkish Airlines Business · IST connection",
-      originalPrice: "€5,400",
+      to: "Tokio",
+      airline: "Turkish Airlines Business · conexión IST",
+      originalPrice: "€5.400",
       dealPrice: "45K pts",
-      savings: "≈€450 value",
+      savings: "≈€450 de valor",
       dates: "Oct–Nov 2025",
-      duration: "48h window",
-      status: "✅ Available now",
-      timestamp: "3 days ago",
+      duration: "Ventana 48h",
+      status: "✅ Disponible ahora",
+      timestamp: "hace 3 días",
     },
     {
       type: "flash-sale" as const,
       typeBadge: "🔔 Flash sale",
       from: "Madrid",
       to: "Miami",
-      airline: "Air Europa Business · nonstop",
-      originalPrice: "€2,100",
+      airline: "Air Europa Business · directo",
+      originalPrice: "€2.100",
       dealPrice: "€480",
-      savings: "77% off",
-      dates: "Feb–Apr 2026",
-      duration: "Lasted 6h",
-      status: "✅ Ticketed",
-      timestamp: "5 days ago",
+      savings: "77% dto.",
+      dates: "Feb–Abr 2026",
+      duration: "Duró 6h",
+      status: "✅ Emitido",
+      timestamp: "hace 5 días",
     },
     {
       type: "card-hack" as const,
-      typeBadge: "💳 Card hack",
+      typeBadge: "💳 Hack con tarjeta",
       from: "Madrid",
-      to: "Dubai",
-      airline: "Emirates Business · A380 upper deck",
-      originalPrice: "€3,800",
+      to: "Dubái",
+      airline: "Emirates Business · cubierta superior A380",
+      originalPrice: "€3.800",
       dealPrice: "60K pts",
-      savings: "≈€380 value",
-      dates: "Any date",
-      duration: "Open window",
-      status: "✅ Strategy guide",
-      timestamp: "1 week ago",
+      savings: "≈€380 de valor",
+      dates: "Cualquier fecha",
+      duration: "Ventana abierta",
+      status: "✅ Guía de estrategia",
+      timestamp: "hace 1 semana",
     },
   ];
 
@@ -89,26 +89,25 @@ export default function HomePage() {
         {/* Badge */}
         <div className="inline-flex items-center gap-2 rounded-full border border-yellow-500/30 bg-yellow-500/10 px-4 py-1.5 text-sm text-yellow-400 mb-8">
           <span className="w-2 h-2 rounded-full bg-yellow-400 pulse" />
-          Join 200+ early members — limited spots
+          Únete a más de 200 miembros — plazas limitadas
         </div>
 
         {/* Headline */}
         <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-[1.05] max-w-5xl mb-6">
-          Stop paying full price
+          Deja de pagar precio completo
           <br />
-          for <span className="gold">Business Class</span>
+          por <span className="gold">Business Class</span>
         </h1>
 
         <p className="text-xl md:text-2xl text-gray-400 max-w-2xl mb-4">
-          We find error fares, secret deals, and points hacks so you can fly
+          Encontramos tarifas error, ofertas secretas y trucos con millas para que vueles
           flatbed
-          <br className="hidden md:block" /> for{" "}
-          <strong className="text-white">up to 90% less</strong> than the listed
-          price.
+          <br className="hidden md:block" /> hasta un{" "}
+          <strong className="text-white">90% más barato</strong> que el precio de lista.
         </p>
 
         <p className="text-sm text-gray-600 mb-10">
-          Madrid → NYC Business. Listed: €3,200 · Found by members:{" "}
+          Madrid → NYC Business. Precio normal: €3.200 · Encontrado por miembros:{" "}
           <span className="text-green-400 font-semibold">€340</span>
         </p>
 
@@ -119,7 +118,7 @@ export default function HomePage() {
         >
           <input
             type="email"
-            placeholder="your@email.com"
+            placeholder="tu@email.com"
             required
             value={heroEmail}
             onChange={(e) => setHeroEmail(e.target.value)}
@@ -129,11 +128,11 @@ export default function HomePage() {
             type="submit"
             className="gradient-gold text-black font-black px-7 py-4 rounded-xl hover:opacity-90 transition whitespace-nowrap"
           >
-            Get alerts free →
+            Recibe alertas gratis →
           </button>
         </form>
         <p className="text-xs text-gray-600">
-          Free forever · No credit card · Unsubscribe anytime
+          Siempre gratis · Sin tarjeta · Cancela cuando quieras
         </p>
 
         {/* Floating couch emoji */}
@@ -144,25 +143,25 @@ export default function HomePage() {
           <div>
             <div className="text-3xl font-black gold">87%</div>
             <div className="text-xs text-gray-500 mt-1">
-              avg. savings
+              ahorro medio
               <br />
-              vs. retail price
+              vs. precio normal
             </div>
           </div>
           <div className="border-x border-white/10">
             <div className="text-3xl font-black gold">3–5</div>
             <div className="text-xs text-gray-500 mt-1">
-              deals per
+              ofertas por
               <br />
-              week
+              semana
             </div>
           </div>
           <div>
             <div className="text-3xl font-black gold">24h</div>
             <div className="text-xs text-gray-500 mt-1">
-              alert window
+              ventana de alerta
               <br />
-              before sold out
+              antes de agotarse
             </div>
           </div>
         </div>
@@ -172,7 +171,7 @@ export default function HomePage() {
       <section className="py-12 px-6 border-t border-white/5">
         <div className="max-w-5xl mx-auto text-center">
           <p className="text-xs font-bold tracking-widest text-gray-600 uppercase mb-8">
-            Deals found on
+            Ofertas encontradas en
           </p>
           <div className="flex flex-wrap items-center justify-center gap-10">
             {[
@@ -198,14 +197,13 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <span className="text-xs font-bold tracking-widest text-yellow-500 uppercase">
-              How it works
+              Cómo funciona
             </span>
             <h2 className="text-4xl md:text-5xl font-black mt-3">
-              Smarter than any travel agent
+              Más listo que cualquier agencia de viajes
             </h2>
             <p className="text-gray-400 mt-4 text-lg max-w-xl mx-auto">
-              We monitor hundreds of sources 24/7 so you never miss a deal
-              again.
+              Monitorizamos cientos de fuentes 24/7 para que nunca más te pierdas una oferta.
             </p>
           </div>
 
@@ -214,11 +212,11 @@ export default function HomePage() {
               <div className="w-12 h-12 gradient-gold rounded-xl flex items-center justify-center text-black text-xl font-black mb-6">
                 1
               </div>
-              <h3 className="text-xl font-bold mb-3">We hunt error fares</h3>
+              <h3 className="text-xl font-bold mb-3">Cazamos tarifas error</h3>
               <p className="text-gray-400 text-sm leading-relaxed">
-                Airlines make pricing mistakes. We detect them in seconds —
-                before they disappear. A €4,000 flight turning into €290 is
-                real, and it happens weekly.
+                Las aerolíneas cometen errores de precio. Los detectamos en segundos —
+                antes de que desaparezcan. Un vuelo de €4.000 que pasa a €290 es
+                real, y ocurre cada semana.
               </p>
             </div>
 
@@ -226,11 +224,11 @@ export default function HomePage() {
               <div className="w-12 h-12 gradient-gold rounded-xl flex items-center justify-center text-black text-xl font-black mb-6">
                 2
               </div>
-              <h3 className="text-xl font-bold mb-3">Points & miles hacks</h3>
+              <h3 className="text-xl font-bold mb-3">Trucos con millas y puntos</h3>
               <p className="text-gray-400 text-sm leading-relaxed">
-                Turkish Miles&amp;Smiles. Flying Blue. Avios. We tell you
-                exactly which program to use and how to get the points —
-                sometimes almost for free with the right credit card.
+                Turkish Miles&amp;Smiles. Flying Blue. Avios. Te decimos
+                exactamente qué programa usar y cómo conseguir los puntos —
+                a veces casi gratis con la tarjeta adecuada.
               </p>
             </div>
 
@@ -238,11 +236,10 @@ export default function HomePage() {
               <div className="w-12 h-12 gradient-gold rounded-xl flex items-center justify-center text-black text-xl font-black mb-6">
                 3
               </div>
-              <h3 className="text-xl font-bold mb-3">Upgrades & vouchers</h3>
+              <h3 className="text-xl font-bold mb-3">Upgrades y bonos</h3>
               <p className="text-gray-400 text-sm leading-relaxed">
-                Last-minute upgrades, companion certificates, and bid auctions.
-                We teach you to play the game airlines don&apos;t want you to
-                know about.
+                Upgrades de última hora, certificados de acompañante y subastas de asientos.
+                Te enseñamos a jugar el juego que las aerolíneas no quieren que conozcas.
               </p>
             </div>
           </div>
@@ -252,7 +249,7 @@ export default function HomePage() {
               href="/how-it-works"
               className="text-sm text-yellow-500 hover:text-yellow-400 transition font-semibold"
             >
-              Learn more about how we find deals →
+              Saber más sobre cómo encontramos las ofertas →
             </Link>
           </div>
         </div>
@@ -263,14 +260,13 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <span className="text-xs font-bold tracking-widest text-yellow-500 uppercase">
-              Recent deals
+              Deals recientes
             </span>
             <h2 className="text-4xl md:text-5xl font-black mt-3">
-              Real deals. Real savings.
+              Ofertas reales. Ahorros reales.
             </h2>
             <p className="text-gray-400 mt-4">
-              These are the kinds of deals our members get. Premium subscribers
-              get notified first.
+              Esto es lo que consiguen nuestros miembros. Los suscriptores Premium reciben las alertas primero.
             </p>
           </div>
 
@@ -282,14 +278,13 @@ export default function HomePage() {
 
           <div className="text-center mt-8">
             <p className="text-xs text-gray-600 mb-6">
-              ⚠️ Deals are time-sensitive. Premium members get notified within
-              minutes.
+              ⚠️ Las ofertas son urgentes. Los miembros Premium reciben la alerta en minutos.
             </p>
             <Link
               href="/deals"
               className="gradient-gold text-black font-bold px-8 py-3.5 rounded-xl hover:opacity-90 transition inline-block"
             >
-              See all deals →
+              Ver todos los deals →
             </Link>
           </div>
         </div>
@@ -299,15 +294,15 @@ export default function HomePage() {
       <section className="py-20 px-6 border-t border-white/5">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl font-black text-center mb-12">
-            What early members say
+            Lo que dicen los primeros miembros
           </h2>
           <div className="grid md:grid-cols-3 gap-6">
             <div className="deal-card rounded-2xl p-6">
               <div className="flex gap-1 mb-4">⭐⭐⭐⭐⭐</div>
               <p className="text-gray-300 text-sm leading-relaxed mb-4">
-                &quot;I booked Madrid → Bangkok in business for €280. My
-                colleague paid €3,400 for the same flight. I literally cried
-                laughing.&quot;
+                &quot;Reservé Madrid → Bangkok en business por €280. Mi
+                compañero pagó €3.400 por el mismo vuelo. Me puse a llorar de
+                la risa.&quot;
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-full gradient-gold flex items-center justify-center text-black font-bold text-sm">
@@ -316,7 +311,7 @@ export default function HomePage() {
                 <div>
                   <div className="text-sm font-semibold">Alejandro M.</div>
                   <div className="text-xs text-gray-600">
-                    Consultant, Madrid
+                    Consultor, Madrid
                   </div>
                 </div>
               </div>
@@ -325,9 +320,9 @@ export default function HomePage() {
             <div className="deal-card rounded-2xl p-6">
               <div className="flex gap-1 mb-4">⭐⭐⭐⭐⭐</div>
               <p className="text-gray-300 text-sm leading-relaxed mb-4">
-                &quot;The points guide alone was worth it. Used Turkish miles
-                for Emirates First Class. This stuff is real — you just need to
-                know where to look.&quot;
+                &quot;La guía de puntos sola ya valió la pena. Usé millas Turkish
+                para Emirates First Class. Esto es real — solo hay que saber
+                dónde mirar.&quot;
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-full gradient-gold flex items-center justify-center text-black font-bold text-sm">
@@ -336,7 +331,7 @@ export default function HomePage() {
                 <div>
                   <div className="text-sm font-semibold">Sara R.</div>
                   <div className="text-xs text-gray-600">
-                    Entrepreneur, Barcelona
+                    Emprendedora, Barcelona
                   </div>
                 </div>
               </div>
@@ -345,9 +340,9 @@ export default function HomePage() {
             <div className="deal-card rounded-2xl p-6">
               <div className="flex gap-1 mb-4">⭐⭐⭐⭐⭐</div>
               <p className="text-gray-300 text-sm leading-relaxed mb-4">
-                &quot;I travel 10 times a year for work. GetFlatbed saved me
-                over €12,000 this year alone. My company still pays economy. I
-                fly business.&quot;
+                &quot;Viajo 10 veces al año por trabajo. GetFlatbed me ahorró
+                más de €12.000 solo este año. Mi empresa paga turista. Yo
+                vuelo business.&quot;
               </p>
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-full gradient-gold flex items-center justify-center text-black font-bold text-sm">
@@ -356,7 +351,7 @@ export default function HomePage() {
                 <div>
                   <div className="text-sm font-semibold">Jorge L.</div>
                   <div className="text-xs text-gray-600">
-                    Sales Director, Valencia
+                    Director Comercial, Valencia
                   </div>
                 </div>
               </div>
@@ -370,46 +365,46 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <span className="text-xs font-bold tracking-widest text-yellow-500 uppercase">
-              Pricing
+              Precios
             </span>
             <h2 className="text-4xl md:text-5xl font-black mt-3">
-              One deal pays for years
+              Una oferta paga años de membresía
             </h2>
             <p className="text-gray-400 mt-4">
-              The average member saves €1,200 on their first booking.
+              El miembro medio ahorra €1.200 en su primera reserva.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
             {/* Free tier */}
             <div className="deal-card rounded-2xl p-8">
-              <h3 className="text-xl font-bold mb-1">Explorer</h3>
-              <p className="text-gray-500 text-sm mb-4">For casual travelers</p>
+              <h3 className="text-xl font-bold mb-1">Explorador</h3>
+              <p className="text-gray-500 text-sm mb-4">Para viajeros ocasionales</p>
               <div className="text-4xl font-black mb-6">
-                Free{" "}
+                Gratis{" "}
                 <span className="text-lg font-normal text-gray-500">
-                  forever
+                  siempre
                 </span>
               </div>
               <ul className="space-y-3 text-sm text-gray-300 mb-8">
-                <li className="flex gap-2">✓ 2 deals per week (delayed 48h)</li>
-                <li className="flex gap-2">✓ Weekly newsletter</li>
-                <li className="flex gap-2">✓ Points basics guide</li>
+                <li className="flex gap-2">✓ 2 ofertas por semana (retraso 48h)</li>
+                <li className="flex gap-2">✓ Newsletter semanal</li>
+                <li className="flex gap-2">✓ Guía básica de puntos</li>
                 <li className="flex gap-2 text-gray-600">
-                  ✗ Real-time alerts
+                  ✗ Alertas en tiempo real
                 </li>
                 <li className="flex gap-2 text-gray-600">
-                  ✗ Error fare notifications
+                  ✗ Notificaciones de tarifa error
                 </li>
                 <li className="flex gap-2 text-gray-600">
-                  ✗ Telegram deal channel
+                  ✗ Canal Telegram de ofertas
                 </li>
               </ul>
               <Link
                 href="/register"
                 className="block text-center border border-white/20 text-white font-bold py-3.5 rounded-xl hover:bg-white/5 transition"
               >
-                Join free
+                Únete gratis
               </Link>
             </div>
 
@@ -421,49 +416,49 @@ export default function HomePage() {
               <div className="flex items-center gap-2 mb-1">
                 <h3 className="text-xl font-bold">Premium</h3>
                 <span className="text-xs font-bold gradient-gold text-black px-2 py-0.5 rounded-full">
-                  Most popular
+                  Más popular
                 </span>
               </div>
               <p className="text-gray-400 text-sm mb-4">
-                For serious deal hunters
+                Para cazadores de ofertas serios
               </p>
               <div className="text-4xl font-black mb-1">
                 €9{" "}
                 <span className="text-lg font-normal text-gray-500">
-                  /month
+                  /mes
                 </span>
               </div>
               <p className="text-xs text-gray-600 mb-6">
-                or €79/year · Save 26%
+                o €79/año · Ahorra 26%
               </p>
               <ul className="space-y-3 text-sm text-gray-300 mb-8">
                 <li className="flex gap-2">
-                  <span className="gold">✓</span> All deals in real-time
+                  <span className="gold">✓</span> Todas las ofertas en tiempo real
                 </li>
                 <li className="flex gap-2">
-                  <span className="gold">✓</span> Error fare instant alerts
+                  <span className="gold">✓</span> Alertas instantáneas de tarifa error
                 </li>
                 <li className="flex gap-2">
-                  <span className="gold">✓</span> Private Telegram channel
+                  <span className="gold">✓</span> Canal privado de Telegram
                 </li>
                 <li className="flex gap-2">
-                  <span className="gold">✓</span> Full points & miles playbook
+                  <span className="gold">✓</span> Guía completa de millas y puntos
                 </li>
                 <li className="flex gap-2">
-                  <span className="gold">✓</span> Upgrade & voucher strategies
+                  <span className="gold">✓</span> Estrategias de upgrades y bonos
                 </li>
                 <li className="flex gap-2">
-                  <span className="gold">✓</span> Priority support
+                  <span className="gold">✓</span> Soporte prioritario
                 </li>
               </ul>
               <Link
                 href="/register"
                 className="block text-center gradient-gold text-black font-black py-3.5 rounded-xl hover:opacity-90 transition"
               >
-                Start free trial →
+                Empieza gratis 7 días →
               </Link>
               <p className="text-xs text-center text-gray-600 mt-3">
-                7-day free trial · Cancel anytime
+                7 días gratis · Cancela cuando quieras
               </p>
             </div>
           </div>
@@ -473,7 +468,7 @@ export default function HomePage() {
               href="/pricing"
               className="text-sm text-yellow-500 hover:text-yellow-400 transition font-semibold"
             >
-              See full pricing details →
+              Ver todos los detalles de precios →
             </Link>
           </div>
         </div>
@@ -484,13 +479,13 @@ export default function HomePage() {
         <div className="max-w-2xl mx-auto">
           <div className="text-5xl mb-6">✈️</div>
           <h2 className="text-4xl md:text-5xl font-black mb-4">
-            Your next flight
+            Tu próximo vuelo
             <br />
-            <span className="gold">doesn&apos;t have to cost a fortune</span>
+            <span className="gold">no tiene por qué costar una fortuna</span>
           </h2>
           <p className="text-gray-400 text-lg mb-10">
-            Join hundreds of smart travelers who fly business for less than most
-            people pay for economy.
+            Únete a cientos de viajeros inteligentes que vuelan en business por menos
+            de lo que otros pagan en turista.
           </p>
 
           <form
@@ -499,7 +494,7 @@ export default function HomePage() {
           >
             <input
               type="email"
-              placeholder="your@email.com"
+              placeholder="tu@email.com"
               required
               value={ctaEmail}
               onChange={(e) => setCtaEmail(e.target.value)}
@@ -509,11 +504,11 @@ export default function HomePage() {
               type="submit"
               className="gradient-gold text-black font-black px-7 py-4 rounded-xl hover:opacity-90 transition"
             >
-              Get alerts →
+              Recibe alertas →
             </button>
           </form>
           <p className="text-xs text-gray-600 mt-4">
-            Free forever · Unsubscribe anytime · No spam, ever
+            Siempre gratis · Cancela cuando quieras · Sin spam, nunca
           </p>
         </div>
       </section>
@@ -530,16 +525,15 @@ export default function HomePage() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="text-5xl mb-4">🛋️</div>
-            <h3 className="text-2xl font-black mb-2">You&apos;re in!</h3>
+            <h3 className="text-2xl font-black mb-2">¡Ya eres miembro!</h3>
             <p className="text-gray-400 mb-6">
-              Check your inbox — first deals coming this week. Welcome to the
-              flatbed club.
+              Revisa tu bandeja de entrada — las primeras ofertas llegan esta semana. Bienvenido al club flatbed.
             </p>
             <button
               onClick={() => setShowModal(false)}
               className="gradient-gold text-black font-bold px-6 py-3 rounded-xl w-full hover:opacity-90 transition"
             >
-              Close
+              Cerrar
             </button>
           </div>
         </div>

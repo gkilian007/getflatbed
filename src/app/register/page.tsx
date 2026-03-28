@@ -8,9 +8,9 @@ import { createClient } from "@/lib/supabase/client";
 type Step = 1 | 2 | 3;
 
 const airports = ["MAD", "BCN", "BOG", "MEX", "EZE", "MIA", "LIS"];
-const destinations = ["NYC", "Tokyo", "Dubai", "Singapore", "Bangkok", "London", "Paris"];
-const dealTypes = ["Error fares", "Miles deals", "Flash sales", "Upgrades"];
-const expertiseLevels = ["Beginner", "Intermediate", "Expert"];
+const destinations = ["NYC", "Tokio", "Dubái", "Singapur", "Bangkok", "Londres", "París"];
+const dealTypes = ["Tarifas error", "Ofertas con millas", "Flash sales", "Upgrades"];
+const expertiseLevels = ["Principiante", "Intermedio", "Experto"];
 
 const MONTHLY_PRICE_ID = process.env.NEXT_PUBLIC_STRIPE_MONTHLY_PRICE_ID || "price_1TFqrXGi2m9cbdSO9ETjNyvd";
 
@@ -30,7 +30,7 @@ export default function RegisterPage() {
   const [selectedAirports, setSelectedAirports] = useState<string[]>([]);
   const [selectedDests, setSelectedDests] = useState<string[]>([]);
   const [selectedDealTypes, setSelectedDealTypes] = useState<string[]>([]);
-  const [expertise, setExpertise] = useState("Beginner");
+  const [expertise, setExpertise] = useState("Principiante");
 
   const supabase = createClient();
 
@@ -44,11 +44,11 @@ export default function RegisterPage() {
     setError("");
 
     if (password !== confirmPassword) {
-      setPasswordError("Passwords don't match");
+      setPasswordError("Las contraseñas no coinciden");
       return;
     }
     if (password.length < 8) {
-      setPasswordError("Password must be at least 8 characters");
+      setPasswordError("La contraseña debe tener al menos 8 caracteres");
       return;
     }
 
@@ -121,11 +121,11 @@ export default function RegisterPage() {
       if (data.url) {
         window.location.href = data.url;
       } else {
-        setError(data.error || "Failed to start checkout");
+        setError(data.error || "Error al iniciar el pago");
         setLoading(false);
       }
     } catch {
-      setError("Failed to start checkout");
+      setError("Error al iniciar el pago");
       setLoading(false);
     }
   };
@@ -174,8 +174,8 @@ export default function RegisterPage() {
         {/* STEP 1 */}
         {step === 1 && (
           <div className="deal-card rounded-2xl p-8">
-            <h1 className="text-2xl font-black mb-1">Create your account</h1>
-            <p className="text-gray-500 text-sm mb-6">Free forever. No credit card required.</p>
+            <h1 className="text-2xl font-black mb-1">Crear cuenta</h1>
+            <p className="text-gray-500 text-sm mb-6">Gratis para siempre. Sin tarjeta de crédito.</p>
 
             <button
               type="button"
@@ -184,23 +184,23 @@ export default function RegisterPage() {
               className="w-full flex items-center justify-center gap-3 border border-white/20 text-white font-semibold py-3.5 rounded-xl hover:bg-white/5 transition mb-6 text-sm disabled:opacity-60"
             >
               <span className="text-xl">G</span>
-              Continue with Google
+              Continuar con Google
             </button>
 
             <div className="flex items-center gap-4 mb-6">
               <div className="flex-1 h-px bg-white/10" />
-              <span className="text-xs text-gray-600">or continue with email</span>
+              <span className="text-xs text-gray-600">o continúa con email</span>
               <div className="flex-1 h-px bg-white/10" />
             </div>
 
             <form onSubmit={handleStep1} className="space-y-4">
               <div>
                 <label className="text-xs font-bold text-gray-500 uppercase tracking-wide block mb-2">
-                  Email address
+                  Correo electrónico
                 </label>
                 <input
                   type="email"
-                  placeholder="your@email.com"
+                  placeholder="tu@email.com"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -209,7 +209,7 @@ export default function RegisterPage() {
               </div>
               <div>
                 <label className="text-xs font-bold text-gray-500 uppercase tracking-wide block mb-2">
-                  Password
+                  Contraseña
                 </label>
                 <input
                   type="password"
@@ -222,7 +222,7 @@ export default function RegisterPage() {
               </div>
               <div>
                 <label className="text-xs font-bold text-gray-500 uppercase tracking-wide block mb-2">
-                  Confirm password
+                  Confirmar contraseña
                 </label>
                 <input
                   type="password"
@@ -241,14 +241,14 @@ export default function RegisterPage() {
                 disabled={loading}
                 className="w-full gradient-gold text-black font-black py-4 rounded-xl hover:opacity-90 transition mt-2 disabled:opacity-60"
               >
-                {loading ? "Creating account..." : "Next →"}
+                {loading ? "Creando cuenta..." : "Siguiente →"}
               </button>
             </form>
 
             <p className="text-center text-sm text-gray-500 mt-6">
-              Already have an account?{" "}
+              ¿Ya tienes cuenta?{" "}
               <Link href="/login" className="text-yellow-500 hover:text-yellow-400 font-semibold">
-                Sign in
+                Iniciar sesión
               </Link>
             </p>
           </div>
@@ -257,12 +257,12 @@ export default function RegisterPage() {
         {/* STEP 2 */}
         {step === 2 && (
           <div className="deal-card rounded-2xl p-8">
-            <h2 className="text-2xl font-black mb-1">Your preferences</h2>
-            <p className="text-gray-500 text-sm mb-8">Help us find the right deals for you</p>
+            <h2 className="text-2xl font-black mb-1">Tus preferencias</h2>
+            <p className="text-gray-500 text-sm mb-8">Ayúdanos a encontrar las mejores ofertas para ti</p>
 
             <div className="mb-6">
               <label className="text-xs font-bold text-gray-500 uppercase tracking-wide block mb-3">
-                Home airports
+                Aeropuertos de origen
               </label>
               <div className="flex flex-wrap gap-2">
                 {airports.map((ap) => (
@@ -284,7 +284,7 @@ export default function RegisterPage() {
 
             <div className="mb-6">
               <label className="text-xs font-bold text-gray-500 uppercase tracking-wide block mb-3">
-                Dream destinations
+                Destinos soñados
               </label>
               <div className="flex flex-wrap gap-2">
                 {destinations.map((d) => (
@@ -306,7 +306,7 @@ export default function RegisterPage() {
 
             <div className="mb-6">
               <label className="text-xs font-bold text-gray-500 uppercase tracking-wide block mb-3">
-                Deal types
+                Tipos de oferta
               </label>
               <div className="space-y-2">
                 {dealTypes.map((dt) => (
@@ -325,7 +325,7 @@ export default function RegisterPage() {
 
             <div className="mb-8">
               <label className="text-xs font-bold text-gray-500 uppercase tracking-wide block mb-3">
-                Miles & points expertise
+                Nivel de experiencia con millas
               </label>
               <div className="grid grid-cols-3 gap-2">
                 {expertiseLevels.map((level) => (
@@ -351,7 +351,7 @@ export default function RegisterPage() {
                 onClick={() => setStep(1)}
                 className="flex-1 border border-white/20 text-white font-bold py-4 rounded-xl hover:bg-white/5 transition"
               >
-                Back
+                Atrás
               </button>
               <button
                 type="button"
@@ -359,7 +359,7 @@ export default function RegisterPage() {
                 disabled={loading}
                 className="flex-1 gradient-gold text-black font-black py-4 rounded-xl hover:opacity-90 transition disabled:opacity-60"
               >
-                {loading ? "Saving..." : "Next →"}
+                {loading ? "Guardando..." : "Siguiente →"}
               </button>
             </div>
           </div>
@@ -368,29 +368,29 @@ export default function RegisterPage() {
         {/* STEP 3 */}
         {step === 3 && (
           <div className="deal-card rounded-2xl p-8">
-            <h2 className="text-2xl font-black mb-1">Choose your plan</h2>
-            <p className="text-gray-500 text-sm mb-8">Start free, upgrade anytime</p>
+            <h2 className="text-2xl font-black mb-1">Elige tu plan</h2>
+            <p className="text-gray-500 text-sm mb-8">Empieza gratis, mejora cuando quieras</p>
 
             <div className="space-y-4 mb-8">
               {/* Explorer */}
               <div className="border border-white/10 rounded-xl p-5 hover:border-white/20 transition">
                 <div className="flex justify-between items-start mb-3">
                   <div>
-                    <h3 className="font-bold">Explorer</h3>
-                    <p className="text-xs text-gray-500">For casual travelers</p>
+                    <h3 className="font-bold">Explorador</h3>
+                    <p className="text-xs text-gray-500">Para viajeros ocasionales</p>
                   </div>
-                  <div className="text-xl font-black">Free</div>
+                  <div className="text-xl font-black">Gratis</div>
                 </div>
                 <ul className="space-y-1.5 text-xs text-gray-500 mb-4">
-                  <li>✓ 2 deals per week (48h delay)</li>
-                  <li>✓ Weekly newsletter</li>
-                  <li>✓ Basic guides</li>
+                  <li>✓ 2 ofertas por semana (retraso 48h)</li>
+                  <li>✓ Newsletter semanal</li>
+                  <li>✓ Guías básicas</li>
                 </ul>
                 <button
                   onClick={handleFreeplan}
                   className="block w-full text-center border border-white/20 text-white font-bold py-3 rounded-xl hover:bg-white/5 transition text-sm"
                 >
-                  Start with Explorer
+                  Empezar con Explorador
                 </button>
               </div>
 
@@ -401,34 +401,34 @@ export default function RegisterPage() {
               >
                 <div className="absolute -top-3 right-4">
                   <span className="text-xs font-bold gradient-gold text-black px-3 py-1 rounded-full">
-                    Recommended
+                    Recomendado
                   </span>
                 </div>
                 <div className="flex justify-between items-start mb-3">
                   <div>
                     <h3 className="font-bold">Premium</h3>
-                    <p className="text-xs text-gray-400">For serious deal hunters</p>
+                    <p className="text-xs text-gray-400">Para cazadores de ofertas serios</p>
                   </div>
                   <div className="text-right">
                     <div className="text-xl font-black">€9</div>
-                    <div className="text-xs text-gray-500">/month</div>
+                    <div className="text-xs text-gray-500">/mes</div>
                   </div>
                 </div>
                 <ul className="space-y-1.5 text-xs text-gray-300 mb-4">
-                  <li><span className="gold">✓</span> All deals in real-time</li>
-                  <li><span className="gold">✓</span> Instant Telegram alerts</li>
-                  <li><span className="gold">✓</span> Error fare notifications</li>
-                  <li><span className="gold">✓</span> Full playbooks & guides</li>
+                  <li><span className="gold">✓</span> Todas las ofertas en tiempo real</li>
+                  <li><span className="gold">✓</span> Alertas instantáneas Telegram</li>
+                  <li><span className="gold">✓</span> Notificaciones de tarifa error</li>
+                  <li><span className="gold">✓</span> Playbooks y guías completos</li>
                 </ul>
                 <button
                   onClick={handlePremium}
                   disabled={loading}
                   className="block w-full text-center gradient-gold text-black font-black py-3 rounded-xl hover:opacity-90 transition text-sm disabled:opacity-60"
                 >
-                  {loading ? "Redirecting..." : "Start free trial →"}
+                  {loading ? "Redirigiendo..." : "Empieza gratis 7 días →"}
                 </button>
                 <p className="text-xs text-center text-gray-600 mt-2">
-                  7-day free trial · Cancel anytime
+                  7 días gratis · Cancela cuando quieras
                 </p>
               </div>
             </div>
@@ -438,7 +438,7 @@ export default function RegisterPage() {
               onClick={() => setStep(2)}
               className="w-full border border-white/10 text-gray-500 font-semibold py-3 rounded-xl hover:bg-white/5 transition text-sm"
             >
-              Back
+              Atrás
             </button>
           </div>
         )}

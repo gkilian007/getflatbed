@@ -4,21 +4,21 @@ import type { Metadata } from "next";
 import { getGuideBySlug, getRelatedGuides, getAllGuides } from "@/lib/guides";
 
 const CATEGORY_MAP: Record<string, string> = {
-  "error-fares": "Error Fares",
-  "miles-points": "Miles & Points",
+  "error-fares": "Tarifas Error",
+  "miles-points": "Millas y Puntos",
   upgrades: "Upgrades",
-  "credit-cards": "Credit Cards",
-  routes: "Routes",
-  beginners: "Beginners",
+  "credit-cards": "Tarjetas",
+  routes: "Rutas",
+  beginners: "Principiantes",
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
-  "Error Fares": "bg-red-500/20 text-red-400",
-  "Miles & Points": "bg-blue-500/20 text-blue-400",
-  "Credit Cards": "bg-purple-500/20 text-purple-400",
+  "Tarifas Error": "bg-red-500/20 text-red-400",
+  "Millas y Puntos": "bg-blue-500/20 text-blue-400",
+  "Tarjetas": "bg-purple-500/20 text-purple-400",
   Upgrades: "bg-green-500/20 text-green-400",
-  Routes: "bg-orange-500/20 text-orange-400",
-  Beginners: "bg-yellow-500/20 text-yellow-400",
+  Rutas: "bg-orange-500/20 text-orange-400",
+  Principiantes: "bg-yellow-500/20 text-yellow-400",
 };
 
 export async function generateStaticParams() {
@@ -36,7 +36,7 @@ export async function generateMetadata({
   if (!guide) return {};
 
   return {
-    title: `${guide.title} | GetFlatbed Guides`,
+    title: `${guide.title} | GetFlatbed Guías`,
     description: guide.excerpt,
     openGraph: {
       title: guide.title,
@@ -139,7 +139,7 @@ export default async function GuidePage({
   const htmlContent = mdToHtml(guide.content);
 
   const formatDate = (d: string) =>
-    new Date(d).toLocaleDateString("en-GB", {
+    new Date(d).toLocaleDateString("es-ES", {
       day: "numeric",
       month: "long",
       year: "numeric",
@@ -154,7 +154,7 @@ export default async function GuidePage({
             {/* Breadcrumb */}
             <nav className="flex items-center gap-2 text-sm text-gray-500 mb-8">
               <Link href="/guides" className="hover:text-yellow-400 transition">
-                Guides
+                Guías
               </Link>
               <span>›</span>
               <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${categoryColor}`}>
@@ -190,17 +190,17 @@ export default async function GuidePage({
                 <span className="text-2xl">✈️</span>
                 <div className="flex-1">
                   <p className="font-bold mb-1 text-sm">
-                    Get these deals to your inbox automatically
+                    Recibe estas ofertas en tu bandeja de entrada automáticamente
                   </p>
                   <p className="text-xs text-gray-500 mb-3">
-                    Business class error fares and deals from Spain, delivered
-                    the moment they appear.
+                    Tarifas error y ofertas de business class desde España, entregadas
+                    en el momento en que aparecen.
                   </p>
                   <Link
                     href="/register"
                     className="inline-block gradient-gold text-black font-bold py-2 px-5 rounded-xl text-sm hover:opacity-90 transition"
                   >
-                    Join free →
+                    Únete gratis →
                   </Link>
                 </div>
               </div>
@@ -219,16 +219,16 @@ export default async function GuidePage({
               {/* Subscribe CTA */}
               <div className="deal-card rounded-2xl p-6">
                 <div className="text-3xl mb-3">🛋️</div>
-                <h4 className="font-bold mb-2 text-sm">Never miss a deal</h4>
+                <h4 className="font-bold mb-2 text-sm">No te pierdas ninguna oferta</h4>
                 <p className="text-xs text-gray-500 mb-4">
-                  Instant alerts when business class drops to crazy prices on
-                  your routes.
+                  Alertas instantáneas cuando business class cae a precios increíbles
+                  en tus rutas.
                 </p>
                 <Link
                   href="/register"
                   className="block text-center gradient-gold text-black font-bold py-2.5 rounded-xl text-sm hover:opacity-90 transition"
                 >
-                  Get free alerts →
+                  Recibe alertas gratis →
                 </Link>
               </div>
 
@@ -236,7 +236,7 @@ export default async function GuidePage({
               {related.length > 0 && (
                 <div>
                   <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">
-                    Related Guides
+                    Guías Relacionadas
                   </h4>
                   <div className="space-y-3">
                     {related.map((r) => (

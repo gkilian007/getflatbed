@@ -53,12 +53,12 @@ export default function DealCard({
         <div className="absolute inset-0 z-10 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center gap-3"
           style={{ background: "rgba(10,10,15,0.7)" }}>
           <div className="text-3xl">🔒</div>
-          <p className="text-sm font-bold text-white">Premium only</p>
+          <p className="text-sm font-bold text-white">Solo Premium</p>
           <Link
             href="/register"
             className="gradient-gold text-black text-xs font-bold px-4 py-2 rounded-full hover:opacity-90 transition"
           >
-            Unlock deals →
+            Desbloquear ofertas →
           </Link>
         </div>
       )}

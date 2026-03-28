@@ -13,45 +13,45 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://getflatbed.vercel.app"),
   title: {
-    default: "GetFlatbed — Fly Business Class for Less Than You Think",
+    default: "GetFlatbed — Vuela en Business Class por Menos",
     template: "%s | GetFlatbed",
   },
   description:
-    "Get instant alerts for business class flights at a fraction of the price. Error fares, points deals, and upgrades — curated for smart travelers from Spain.",
+    "Alertas en tiempo real de tarifas error, canjes de millas y ofertas de business class. El primer servicio en español para viajeros inteligentes.",
   keywords: [
-    "business class flights",
-    "error fares",
-    "cheap business class",
-    "miles and points Spain",
-    "flight deals Spain",
-    "flatbed flights",
-    "business class alerts",
+    "vuelos business class baratos",
+    "tarifas error vuelos",
+    "business class económico",
+    "millas y puntos España",
+    "ofertas vuelos España",
+    "vuelos flatbed",
+    "alertas business class",
   ],
-  authors: [{ name: "GetFlatbed Team" }],
+  authors: [{ name: "Equipo GetFlatbed" }],
   creator: "GetFlatbed",
   publisher: "GetFlatbed",
   openGraph: {
     type: "website",
-    locale: "en_ES",
+    locale: "es_ES",
     url: "https://getflatbed.vercel.app",
     siteName: "GetFlatbed",
-    title: "GetFlatbed — Fly Business Class for Less Than You Think",
+    title: "GetFlatbed — Vuela en Business Class por Menos",
     description:
-      "Get instant alerts for business class flights at a fraction of the price. Error fares, points deals, and upgrades — curated for smart travelers.",
+      "Alertas en tiempo real de tarifas error, canjes de millas y ofertas de business class. El primer servicio en español para viajeros inteligentes.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "GetFlatbed — Business Class for Less",
+        alt: "GetFlatbed — Business Class por Menos",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "GetFlatbed — Fly Business Class for Less Than You Think",
+    title: "GetFlatbed — Vuela en Business Class por Menos",
     description:
-      "Instant alerts for business class error fares and deals. Join free.",
+      "Alertas instantáneas de tarifas error y ofertas de business class. Únete gratis.",
     images: ["/og-image.png"],
   },
   robots: {
@@ -73,7 +73,7 @@ const jsonLd = {
   name: "GetFlatbed",
   url: "https://getflatbed.vercel.app",
   description:
-    "Instant alerts for business class error fares and deals from Spain.",
+    "Alertas instantáneas de tarifas error y ofertas de business class desde España.",
   sameAs: [],
 };
 
@@ -83,7 +83,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="es" className={inter.variable}>
       <head>
         <script
           type="application/ld+json"

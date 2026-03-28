@@ -60,9 +60,9 @@ export default function LoginPage() {
 
         {/* Card */}
         <div className="deal-card rounded-2xl p-8">
-          <h1 className="text-2xl font-black mb-1">Welcome back</h1>
+          <h1 className="text-2xl font-black mb-1">Bienvenido de vuelta</h1>
           <p className="text-gray-500 text-sm mb-8">
-            Sign in to your account to access deals
+            Inicia sesión para acceder a tus ofertas
           </p>
 
           {error && (
@@ -79,13 +79,13 @@ export default function LoginPage() {
             className="w-full flex items-center justify-center gap-3 border border-white/20 text-white font-semibold py-3.5 rounded-xl hover:bg-white/5 transition mb-6 text-sm disabled:opacity-60"
           >
             <span className="text-xl">G</span>
-            Continue with Google
+            Continuar con Google
           </button>
 
           {/* Divider */}
           <div className="flex items-center gap-4 mb-6">
             <div className="flex-1 h-px bg-white/10" />
-            <span className="text-xs text-gray-600">or continue with email</span>
+            <span className="text-xs text-gray-600">o continúa con email</span>
             <div className="flex-1 h-px bg-white/10" />
           </div>
 
@@ -93,11 +93,11 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="text-xs font-bold text-gray-500 uppercase tracking-wide block mb-2">
-                Email address
+                Correo electrónico
               </label>
               <input
                 type="email"
-                placeholder="your@email.com"
+                placeholder="tu@email.com"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -108,13 +108,13 @@ export default function LoginPage() {
             <div>
               <div className="flex justify-between items-center mb-2">
                 <label className="text-xs font-bold text-gray-500 uppercase tracking-wide">
-                  Password
+                  Contraseña
                 </label>
                 <Link
                   href="/forgot-password"
                   className="text-xs text-yellow-500 hover:text-yellow-400"
                 >
-                  Forgot password?
+                  ¿Olvidaste tu contraseña?
                 </Link>
               </div>
               <input
@@ -132,17 +132,17 @@ export default function LoginPage() {
               disabled={loading}
               className="w-full gradient-gold text-black font-black py-4 rounded-xl hover:opacity-90 transition disabled:opacity-60 mt-2"
             >
-              {loading ? "Signing in..." : "Sign in →"}
+              {loading ? "Iniciando sesión..." : "Iniciar sesión →"}
             </button>
           </form>
 
           <p className="text-center text-sm text-gray-500 mt-6">
-            Don&apos;t have an account?{" "}
+            ¿No tienes cuenta?{" "}
             <Link
               href="/register"
               className="text-yellow-500 hover:text-yellow-400 font-semibold"
             >
-              Sign up free
+              Crear cuenta gratis
             </Link>
           </p>
         </div>

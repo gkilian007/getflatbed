@@ -4,40 +4,40 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 const CATEGORIES = [
-  "All",
-  "Error Fares",
-  "Miles & Points",
+  "Todos",
+  "Tarifas Error",
+  "Millas y Puntos",
   "Upgrades",
-  "Credit Cards",
-  "Routes",
-  "Beginners",
+  "Tarjetas",
+  "Rutas",
+  "Principiantes",
 ];
 
 const CATEGORY_MAP: Record<string, string> = {
-  "error-fares": "Error Fares",
-  "miles-points": "Miles & Points",
+  "error-fares": "Tarifas Error",
+  "miles-points": "Millas y Puntos",
   upgrades: "Upgrades",
-  "credit-cards": "Credit Cards",
-  routes: "Routes",
-  beginners: "Beginners",
+  "credit-cards": "Tarjetas",
+  routes: "Rutas",
+  beginners: "Principiantes",
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
-  "Error Fares": "bg-red-500/20 text-red-400",
-  "Miles & Points": "bg-blue-500/20 text-blue-400",
-  "Credit Cards": "bg-purple-500/20 text-purple-400",
+  "Tarifas Error": "bg-red-500/20 text-red-400",
+  "Millas y Puntos": "bg-blue-500/20 text-blue-400",
+  "Tarjetas": "bg-purple-500/20 text-purple-400",
   Upgrades: "bg-green-500/20 text-green-400",
-  Routes: "bg-orange-500/20 text-orange-400",
-  Beginners: "bg-yellow-500/20 text-yellow-400",
+  Rutas: "bg-orange-500/20 text-orange-400",
+  Principiantes: "bg-yellow-500/20 text-yellow-400",
 };
 
 const CATEGORY_ICONS: Record<string, string> = {
-  "Error Fares": "⚡",
-  "Miles & Points": "🏆",
+  "Tarifas Error": "⚡",
+  "Millas y Puntos": "🏆",
   Upgrades: "🔼",
-  "Credit Cards": "💳",
-  Routes: "🗺️",
-  Beginners: "🛋️",
+  "Tarjetas": "💳",
+  Rutas: "🗺️",
+  Principiantes: "🛋️",
 };
 
 interface Guide {
@@ -52,7 +52,7 @@ interface Guide {
 }
 
 export default function GuidesPage() {
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeCategory, setActiveCategory] = useState("Todos");
   const [guides, setGuides] = useState<Guide[]>([]);
 
   useEffect(() => {
@@ -68,12 +68,12 @@ export default function GuidesPage() {
   }));
 
   const filtered =
-    activeCategory === "All"
+    activeCategory === "Todos"
       ? formatted
       : formatted.filter((g) => g.categoryLabel === activeCategory);
 
   const formatDate = (d: string) =>
-    new Date(d).toLocaleDateString("en-GB", {
+    new Date(d).toLocaleDateString("es-ES", {
       day: "numeric",
       month: "short",
       year: "numeric",
@@ -85,15 +85,15 @@ export default function GuidesPage() {
       <section className="py-20 px-6 text-center">
         <div className="max-w-3xl mx-auto">
           <span className="text-xs font-bold tracking-widest text-yellow-500 uppercase">
-            Guides
+            Guías
           </span>
           <h1 className="text-5xl md:text-6xl font-black mt-4 mb-4 leading-tight">
-            The Business Class
+            El Manual de
             <br />
-            <span className="gold">Playbook</span>
+            <span className="gold">Business Class</span>
           </h1>
           <p className="text-xl text-gray-400">
-            Everything you need to fly flatbed for less
+            Todo lo que necesitas para volar flatbed por menos
           </p>
         </div>
       </section>
@@ -156,8 +156,8 @@ export default function GuidesPage() {
             {filtered.length === 0 && guides.length > 0 && (
               <div className="text-center py-20 text-gray-600">
                 <div className="text-5xl mb-4">📚</div>
-                <p>No guides in this category yet.</p>
-                <p className="text-sm mt-2">More coming soon!</p>
+                <p>Aún no hay guías en esta categoría.</p>
+                <p className="text-sm mt-2">¡Pronto habrá más!</p>
               </div>
             )}
 
@@ -188,45 +188,44 @@ export default function GuidesPage() {
               <div className="flex items-center gap-2 mb-4">
                 <span className="w-2 h-2 rounded-full bg-yellow-400 pulse" />
                 <span className="text-xs font-bold text-yellow-500 uppercase tracking-wide">
-                  Active deal now
+                  Oferta activa ahora
                 </span>
               </div>
-              <h4 className="font-bold mb-1">Madrid → New York</h4>
+              <h4 className="font-bold mb-1">Madrid → Nueva York</h4>
               <p className="text-xs text-gray-500 mb-3">
-                Iberia Business · nonstop
+                Iberia Business · directo
               </p>
               <div className="flex items-end gap-3 mb-4">
                 <span className="text-3xl font-black text-green-400">€290</span>
                 <span className="text-sm text-gray-600 line-through mb-1">
-                  €3,180
+                  €3.180
                 </span>
                 <span className="text-xs text-yellow-500 font-bold mb-1">
-                  91% off
+                  91% dto.
                 </span>
               </div>
               <Link
                 href="/deals"
                 className="block text-center gradient-gold text-black font-bold py-2.5 rounded-xl text-sm hover:opacity-90 transition"
               >
-                See all deals →
+                Ver todos los deals →
               </Link>
             </div>
 
             <div className="deal-card rounded-2xl p-6">
               <div className="text-3xl mb-3">🛋️</div>
-              <h4 className="font-bold mb-2">Never miss a deal</h4>
+              <h4 className="font-bold mb-2">No te pierdas ninguna oferta</h4>
               <p className="text-sm text-gray-500 mb-4">
-                Get instant alerts when business class fares drop to insane
-                prices.
+                Recibe alertas instantáneas cuando las tarifas de business class caigan a precios increíbles.
               </p>
               <Link
                 href="/register"
                 className="block text-center gradient-gold text-black font-bold py-3 rounded-xl text-sm hover:opacity-90 transition"
               >
-                Get free alerts →
+                Recibe alertas gratis →
               </Link>
               <p className="text-xs text-gray-600 text-center mt-3">
-                Free forever · No spam
+                Siempre gratis · Sin spam
               </p>
             </div>
           </aside>

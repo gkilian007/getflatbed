@@ -14,7 +14,7 @@ export default function PricingToggle({ period, onChange }: PricingToggleProps) 
           period === "monthly" ? "text-white" : "text-gray-500 hover:text-gray-300"
         }`}
       >
-        Monthly
+        Mensual
         {period === "monthly" && (
           <span className="absolute bottom-0 left-0 right-0 h-0.5 gradient-gold rounded-full" />
         )}
@@ -28,9 +28,9 @@ export default function PricingToggle({ period, onChange }: PricingToggleProps) 
           period === "annual" ? "text-white" : "text-gray-500 hover:text-gray-300"
         }`}
       >
-        Annual
+        Anual
         <span className="text-xs font-bold gradient-gold text-black px-2 py-0.5 rounded-full">
-          Save 26%
+          Ahorra 26%
         </span>
         {period === "annual" && (
           <span className="absolute bottom-0 left-0 right-0 h-0.5 gradient-gold rounded-full" />

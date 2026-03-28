@@ -5,10 +5,10 @@ import { createClient } from "@/lib/supabase/server";
 const MONTHLY_PRICE_ID = "price_1TFqrXGi2m9cbdSO9ETjNyvd";
 
 const dealTypeLabels: Record<string, string> = {
-  error_fare: "⚡ Error fare",
-  miles: "🏆 Miles deal",
+  error_fare: "⚡ Tarifa error",
+  miles: "🏆 Oferta con millas",
   flash_sale: "🔔 Flash sale",
-  voucher: "💳 Voucher",
+  voucher: "💳 Bono",
 };
 
 const dealTypeColors: Record<string, string> = {
@@ -38,7 +38,7 @@ export default async function DashboardPage() {
     .limit(3);
 
   const isPremium = profile?.plan === "premium";
-  const displayName = profile?.name || user.email?.split("@")[0] || "Traveler";
+  const displayName = profile?.name || user.email?.split("@")[0] || "Viajero";
 
   return (
     <div className="pt-20 min-h-screen">
@@ -47,12 +47,12 @@ export default async function DashboardPage() {
         <div className="flex flex-wrap items-start justify-between gap-4 mb-10">
           <div>
             <h1 className="text-3xl font-black">
-              Welcome back, <span className="gold">{displayName}</span>
+              Bienvenido, <span className="gold">{displayName}</span>
             </h1>
             <p className="text-gray-500 mt-1 text-sm">
               {isPremium
-                ? "You have full access to all deals and alerts."
-                : "You're on the free plan. Upgrade to unlock all deals."}
+                ? "Tienes acceso completo a todas las ofertas y alertas."
+                : "Estás en el plan gratuito. Mejora para desbloquear todas las ofertas."}
             </p>
           </div>
           <div className="flex items-center gap-3">
@@ -63,7 +63,7 @@ export default async function DashboardPage() {
                   : "bg-white/5 text-gray-400 border-white/10"
               }`}
             >
-              {isPremium ? "✈️ Premium" : "Explorer"}
+              {isPremium ? "✈️ Premium" : "Explorador"}
             </span>
           </div>
         </div>
@@ -77,10 +77,10 @@ export default async function DashboardPage() {
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
                 <h2 className="font-black text-lg mb-1">
-                  Unlock all deals in real-time
+                  Desbloquea todas las ofertas en tiempo real
                 </h2>
                 <p className="text-gray-400 text-sm">
-                  Get instant Telegram alerts, error fares, and full access for €9/month.
+                  Recibe alertas instantáneas por Telegram, tarifas error y acceso completo por €9/mes.
                 </p>
               </div>
               <UpgradeButton priceId={MONTHLY_PRICE_ID} />
@@ -91,10 +91,10 @@ export default async function DashboardPage() {
         {/* Stats row */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
           {[
-            { label: "Active deals", value: "24", icon: "🎯" },
-            { label: "Your alerts", value: isPremium ? "Live" : "48h delay", icon: "🔔" },
-            { label: "Avg savings", value: "88%", icon: "💰" },
-            { label: "Your plan", value: isPremium ? "Premium" : "Free", icon: "⭐" },
+            { label: "Ofertas activas", value: "24", icon: "🎯" },
+            { label: "Tus alertas", value: isPremium ? "En directo" : "Retraso 48h", icon: "🔔" },
+            { label: "Ahorro medio", value: "88%", icon: "💰" },
+            { label: "Tu plan", value: isPremium ? "Premium" : "Gratis", icon: "⭐" },
           ].map((stat) => (
             <div key={stat.label} className="deal-card rounded-xl p-4">
               <div className="text-2xl mb-1">{stat.icon}</div>
@@ -107,12 +107,12 @@ export default async function DashboardPage() {
         {/* Latest Deals */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-black">Latest Deals</h2>
+            <h2 className="text-xl font-black">Últimas Ofertas</h2>
             <Link
               href="/deals"
               className="text-yellow-500 hover:text-yellow-400 text-sm font-semibold"
             >
-              View all →
+              Ver todas →
             </Link>
           </div>
 
@@ -159,7 +159,7 @@ export default async function DashboardPage() {
                         </div>
                         {deal.savings_pct && (
                           <div className="text-green-400 text-sm font-bold">
-                            {deal.savings_pct}% off
+                            {deal.savings_pct}% dto.
                           </div>
                         )}
                       </div>
@@ -177,7 +177,7 @@ export default async function DashboardPage() {
                             href="/pricing"
                             className="text-xs gradient-gold text-black font-bold px-3 py-1.5 rounded-full"
                           >
-                            Upgrade to see
+                            Mejora para ver
                           </Link>
                         </div>
                       </div>
@@ -189,14 +189,14 @@ export default async function DashboardPage() {
           ) : (
             <div className="deal-card rounded-xl p-8 text-center text-gray-500">
               <div className="text-4xl mb-3">✈️</div>
-              <p>No active deals right now. Check back soon!</p>
+              <p>No hay ofertas activas ahora mismo. ¡Vuelve pronto!</p>
             </div>
           )}
         </div>
 
         {/* Account info */}
         <div className="deal-card rounded-2xl p-6 mt-8">
-          <h2 className="font-black text-lg mb-4">Account</h2>
+          <h2 className="font-black text-lg mb-4">Mi cuenta</h2>
           <div className="space-y-3 text-sm">
             <div className="flex justify-between">
               <span className="text-gray-500">Email</span>
@@ -205,12 +205,12 @@ export default async function DashboardPage() {
             <div className="flex justify-between">
               <span className="text-gray-500">Plan</span>
               <span className={isPremium ? "gold font-bold" : "text-gray-400"}>
-                {isPremium ? "Premium" : "Free"}
+                {isPremium ? "Premium" : "Gratis"}
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-500">Member since</span>
-              <span>{new Date(user.created_at).toLocaleDateString()}</span>
+              <span className="text-gray-500">Miembro desde</span>
+              <span>{new Date(user.created_at).toLocaleDateString("es-ES")}</span>
             </div>
           </div>
           <SignOutButton />

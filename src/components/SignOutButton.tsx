@@ -18,7 +18,7 @@ export default function SignOutButton() {
       onClick={handleSignOut}
       className="mt-6 w-full border border-white/10 text-gray-500 font-semibold py-3 rounded-xl hover:bg-white/5 hover:text-white transition text-sm"
     >
-      Sign out
+      Cerrar sesión
     </button>
   );
 }

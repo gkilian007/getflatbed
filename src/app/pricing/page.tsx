@@ -6,60 +6,60 @@ import PricingToggle from "@/components/PricingToggle";
 
 const pricingFaqs = [
   {
-    question: "Can I cancel anytime?",
+    question: "¿Puedo cancelar en cualquier momento?",
     answer:
-      "Yes, absolutely. Cancel your Premium subscription anytime from your account settings. You won't be charged again after cancellation, and you keep Premium access until the end of your billing period.",
+      "Sí, sin problemas. Cancela tu suscripción Premium en cualquier momento desde los ajustes de tu cuenta. No se te cobrará más tras la cancelación y mantendrás el acceso Premium hasta el final de tu período de facturación.",
   },
   {
-    question: "Is there a contract or minimum commitment?",
+    question: "¿Hay contrato o compromiso mínimo?",
     answer:
-      "No contract, no minimum commitment. We're month-to-month (or year-to-year if you choose the annual plan). You can downgrade to Explorer free plan at any time.",
+      "Sin contrato, sin compromiso mínimo. Somos mes a mes (o año a año si eliges el plan anual). Puedes degradar al plan Explorador gratuito en cualquier momento.",
   },
   {
-    question: "What payment methods do you accept?",
+    question: "¿Qué métodos de pago aceptáis?",
     answer:
-      "We accept all major credit and debit cards (Visa, Mastercard, American Express) via Stripe. Annual subscribers can also pay by bank transfer. We plan to add PayPal and Bizum soon.",
+      "Aceptamos todas las tarjetas de crédito y débito principales (Visa, Mastercard, American Express) a través de Stripe. Los suscriptores anuales también pueden pagar por transferencia bancaria. Próximamente añadiremos PayPal y Bizum.",
   },
   {
-    question: "Are there discounts for companies or groups?",
+    question: "¿Hay descuentos para empresas o grupos?",
     answer:
-      "Yes! Companies with 3+ employees get 20% off annual Premium subscriptions. Contact us at hello@getflatbed.com for a group quote. We also offer special rates for travel agencies and corporate travel managers.",
+      "¡Sí! Las empresas con 3 o más empleados obtienen un 20% de descuento en suscripciones Premium anuales. Contáctanos en hello@getflatbed.com para un presupuesto grupal. También ofrecemos tarifas especiales para agencias de viajes y gestores de viajes corporativos.",
   },
 ];
 
 const features = [
   {
-    name: "Deals per week",
-    explorer: "2 deals (48h delayed)",
-    premium: "All deals in real-time",
+    name: "Ofertas por semana",
+    explorer: "2 ofertas (retraso 48h)",
+    premium: "Todas en tiempo real",
   },
-  { name: "Email newsletter", explorer: "Weekly digest", premium: "Daily digest" },
+  { name: "Newsletter por email", explorer: "Resumen semanal", premium: "Resumen diario" },
   {
-    name: "Telegram channel",
+    name: "Canal de Telegram",
     explorer: false,
-    premium: "✅ Instant alerts",
+    premium: "✅ Alertas instantáneas",
   },
   {
-    name: "Error fare alerts",
+    name: "Alertas de tarifa error",
     explorer: false,
-    premium: "✅ Immediate notification",
+    premium: "✅ Notificación inmediata",
   },
   {
-    name: "Miles & points guide",
-    explorer: "Basic (10 pages)",
-    premium: "Complete (50+ pages)",
+    name: "Guía de millas y puntos",
+    explorer: "Básica (10 páginas)",
+    premium: "Completa (50+ páginas)",
   },
-  { name: "Upgrade guide", explorer: false, premium: "✅ Full playbook" },
+  { name: "Guía de upgrades", explorer: false, premium: "✅ Playbook completo" },
   {
-    name: "Personalized alerts",
+    name: "Alertas personalizadas",
     explorer: false,
-    premium: "✅ Destination + price filters",
+    premium: "✅ Filtros destino + precio",
   },
-  { name: "Support", explorer: false, premium: "✅ Priority support" },
+  { name: "Soporte", explorer: false, premium: "✅ Soporte prioritario" },
   {
-    name: "Money-back guarantee",
+    name: "Garantía de devolución",
     explorer: "—",
-    premium: "✅ 7-day full refund",
+    premium: "✅ Reembolso total 7 días",
   },
 ];
 
@@ -67,9 +67,9 @@ export default function PricingPage() {
   const [period, setPeriod] = useState<"monthly" | "annual">("monthly");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  const monthlyPrice = period === "monthly" ? "€9" : "€6.58";
+  const monthlyPrice = period === "monthly" ? "€9" : "€6,58";
   const annualTotal = "€79";
-  const periodLabel = period === "monthly" ? "/month" : "/mo (billed €79/yr)";
+  const periodLabel = period === "monthly" ? "/mes" : "/mes (facturado €79/año)";
 
   return (
     <div className="pt-20">
@@ -77,16 +77,16 @@ export default function PricingPage() {
       <section className="py-20 px-6 text-center">
         <div className="max-w-3xl mx-auto">
           <span className="text-xs font-bold tracking-widest text-yellow-500 uppercase">
-            Pricing
+            Precios
           </span>
           <h1 className="text-5xl md:text-6xl font-black mt-4 mb-6 leading-tight">
-            One deal pays for
+            Una oferta paga
             <br />
-            <span className="gold">10 years of membership</span>
+            <span className="gold">10 años de membresía</span>
           </h1>
           <p className="text-xl text-gray-400 mb-10">
-            Average member saves €1,400 on their first Premium booking. At
-            €9/month, the math is obvious.
+            El miembro medio ahorra €1.400 en su primera reserva Premium. A
+            €9/mes, la matemática es obvia.
           </p>
 
           {/* Toggle */}
@@ -100,56 +100,56 @@ export default function PricingPage() {
           <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
             {/* Explorer */}
             <div className="deal-card rounded-2xl p-8">
-              <h3 className="text-xl font-bold mb-1">Explorer</h3>
-              <p className="text-gray-500 text-sm mb-6">For casual travelers</p>
+              <h3 className="text-xl font-bold mb-1">Explorador</h3>
+              <p className="text-gray-500 text-sm mb-6">Para viajeros ocasionales</p>
               <div className="text-5xl font-black mb-2">
-                Free{" "}
+                Gratis{" "}
                 <span className="text-xl font-normal text-gray-500">
-                  forever
+                  siempre
                 </span>
               </div>
               <p className="text-xs text-gray-600 mb-8">
-                No credit card required
+                Sin tarjeta de crédito
               </p>
               <ul className="space-y-3 text-sm text-gray-400 mb-10">
                 <li className="flex gap-2 items-start">
                   <span className="text-white mt-0.5">✓</span>
-                  <span>2 deals per week (48h delay)</span>
+                  <span>2 ofertas por semana (retraso 48h)</span>
                 </li>
                 <li className="flex gap-2 items-start">
                   <span className="text-white mt-0.5">✓</span>
-                  <span>Weekly email newsletter</span>
+                  <span>Newsletter semanal por email</span>
                 </li>
                 <li className="flex gap-2 items-start">
                   <span className="text-white mt-0.5">✓</span>
-                  <span>Basic miles & points guide</span>
+                  <span>Guía básica de millas y puntos</span>
                 </li>
                 <li className="flex gap-2 items-start text-gray-600">
                   <span className="mt-0.5">✗</span>
-                  <span>Real-time alerts</span>
+                  <span>Alertas en tiempo real</span>
                 </li>
                 <li className="flex gap-2 items-start text-gray-600">
                   <span className="mt-0.5">✗</span>
-                  <span>Error fare notifications</span>
+                  <span>Notificaciones de tarifa error</span>
                 </li>
                 <li className="flex gap-2 items-start text-gray-600">
                   <span className="mt-0.5">✗</span>
-                  <span>Telegram deal channel</span>
+                  <span>Canal Telegram de ofertas</span>
                 </li>
                 <li className="flex gap-2 items-start text-gray-600">
                   <span className="mt-0.5">✗</span>
-                  <span>Personalized alerts</span>
+                  <span>Alertas personalizadas</span>
                 </li>
                 <li className="flex gap-2 items-start text-gray-600">
                   <span className="mt-0.5">✗</span>
-                  <span>Priority support</span>
+                  <span>Soporte prioritario</span>
                 </li>
               </ul>
               <Link
                 href="/register"
                 className="block text-center border border-white/20 text-white font-bold py-4 rounded-xl hover:bg-white/5 transition"
               >
-                Start with Explorer
+                Empezar con Explorador
               </Link>
             </div>
 
@@ -160,12 +160,12 @@ export default function PricingPage() {
             >
               <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
                 <span className="text-xs font-bold gradient-gold text-black px-4 py-1.5 rounded-full">
-                  Most popular
+                  Más popular
                 </span>
               </div>
               <h3 className="text-xl font-bold mb-1">Premium</h3>
               <p className="text-gray-400 text-sm mb-6">
-                For serious deal hunters
+                Para cazadores de ofertas serios
               </p>
               <div className="text-5xl font-black mb-1">
                 {monthlyPrice}{" "}
@@ -175,56 +175,56 @@ export default function PricingPage() {
               </div>
               {period === "annual" && (
                 <p className="text-xs text-green-400 font-semibold mb-2">
-                  You save €29/year vs monthly
+                  Ahorras €29/año vs mensual
                 </p>
               )}
               <p className="text-xs text-gray-600 mb-8">
                 {period === "annual"
-                  ? `Billed ${annualTotal} annually`
-                  : "or €79/year — save 26%"}
+                  ? `Facturado ${annualTotal} anualmente`
+                  : "o €79/año — ahorra 26%"}
               </p>
               <ul className="space-y-3 text-sm text-gray-300 mb-10">
                 <li className="flex gap-2 items-start">
                   <span className="gold mt-0.5">✓</span>
-                  <span>All deals in real-time</span>
+                  <span>Todas las ofertas en tiempo real</span>
                 </li>
                 <li className="flex gap-2 items-start">
                   <span className="gold mt-0.5">✓</span>
-                  <span>Error fare instant alerts</span>
+                  <span>Alertas instantáneas de tarifa error</span>
                 </li>
                 <li className="flex gap-2 items-start">
                   <span className="gold mt-0.5">✓</span>
-                  <span>Private Telegram channel</span>
+                  <span>Canal privado de Telegram</span>
                 </li>
                 <li className="flex gap-2 items-start">
                   <span className="gold mt-0.5">✓</span>
-                  <span>Full points & miles playbook (50+ pages)</span>
+                  <span>Playbook completo de millas y puntos (50+ páginas)</span>
                 </li>
                 <li className="flex gap-2 items-start">
                   <span className="gold mt-0.5">✓</span>
-                  <span>Upgrade & voucher strategies</span>
+                  <span>Estrategias de upgrades y bonos</span>
                 </li>
                 <li className="flex gap-2 items-start">
                   <span className="gold mt-0.5">✓</span>
-                  <span>Personalized alerts (destination + budget)</span>
+                  <span>Alertas personalizadas (destino + presupuesto)</span>
                 </li>
                 <li className="flex gap-2 items-start">
                   <span className="gold mt-0.5">✓</span>
-                  <span>Priority email support</span>
+                  <span>Soporte por email prioritario</span>
                 </li>
                 <li className="flex gap-2 items-start">
                   <span className="gold mt-0.5">✓</span>
-                  <span>7-day money-back guarantee</span>
+                  <span>Garantía de devolución 7 días</span>
                 </li>
               </ul>
               <Link
                 href="/register"
                 className="block text-center gradient-gold text-black font-black py-4 rounded-xl hover:opacity-90 transition"
               >
-                Start 7-day free trial →
+                Empieza gratis 7 días →
               </Link>
               <p className="text-xs text-center text-gray-600 mt-3">
-                No credit card needed for trial
+                Sin tarjeta para el periodo de prueba
               </p>
             </div>
           </div>
@@ -235,12 +235,12 @@ export default function PricingPage() {
       <section className="py-20 px-6 border-t border-white/5">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-2xl font-black text-center mb-10">
-            Full feature comparison
+            Comparativa completa de funciones
           </h2>
           <div className="deal-card rounded-2xl overflow-hidden">
             <div className="grid grid-cols-3 bg-white/5 px-6 py-4 text-sm font-bold">
-              <div className="text-gray-400">Feature</div>
-              <div className="text-center text-gray-400">Explorer</div>
+              <div className="text-gray-400">Función</div>
+              <div className="text-center text-gray-400">Explorador</div>
               <div className="text-center text-yellow-500">Premium</div>
             </div>
             {features.map((feature, i) => (
@@ -272,12 +272,12 @@ export default function PricingPage() {
             className="rounded-2xl p-10 border border-yellow-500/20 mb-16"
             style={{ background: "rgba(245,200,66,0.04)" }}
           >
-            <div className="text-5xl font-black gold mb-2">€1,400</div>
+            <div className="text-5xl font-black gold mb-2">€1.400</div>
             <p className="text-gray-400">
-              Average savings on first Premium booking
+              Ahorro medio en la primera reserva Premium
             </p>
             <p className="text-xs text-gray-600 mt-2">
-              Based on member-reported savings, Jan–Mar 2026
+              Basado en ahorros reportados por miembros, enero–marzo 2026
             </p>
           </div>
 
@@ -288,21 +288,21 @@ export default function PricingPage() {
                 name: "Carlos R.",
                 city: "Madrid",
                 quote:
-                  "Paid for 3 years of Premium with one error fare to Singapore. Business class for €320. Unbelievable.",
+                  "Pagué 3 años de Premium con una tarifa error a Singapur. Business class por €320. Increíble.",
               },
               {
                 initials: "LM",
                 name: "Laura M.",
                 city: "Barcelona",
                 quote:
-                  "Used Turkish miles to book Emirates First Class. My friends thought I won a contest. I just read the guide.",
+                  "Usé millas Turkish para reservar Emirates First Class. Mis amigos pensaban que había ganado un concurso. Solo leí la guía.",
               },
               {
                 initials: "DA",
                 name: "Diego A.",
                 city: "Buenos Aires",
                 quote:
-                  "First month I booked BCN→NYC in Iberia Business for €290. The subscription pays itself in minutes.",
+                  "El primer mes reservé BCN→NYC en Iberia Business por €290. La suscripción se paga sola en minutos.",
               },
             ].map((t) => (
               <div key={t.name} className="deal-card rounded-2xl p-6">
@@ -329,7 +329,7 @@ export default function PricingPage() {
       <section className="py-20 px-6 border-t border-white/5">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-2xl font-black text-center mb-10">
-            Pricing FAQ
+            Preguntas frecuentes sobre precios
           </h2>
           <div className="space-y-3">
             {pricingFaqs.map((faq, i) => (
@@ -358,27 +358,27 @@ export default function PricingPage() {
       <section className="py-20 px-6 border-t border-white/5 text-center">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-3xl font-black mb-4">
-            Start saving on business class today
+            Empieza a ahorrar en business class hoy
           </h2>
           <p className="text-gray-400 mb-10">
-            Try Premium free for 7 days. No credit card required.
+            Prueba Premium gratis 7 días. Sin tarjeta de crédito.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/register"
               className="gradient-gold text-black font-black px-8 py-4 rounded-xl hover:opacity-90 transition"
             >
-              Start 7-day free trial →
+              Empieza gratis 7 días →
             </Link>
             <Link
               href="/register"
               className="border border-white/20 text-white font-bold px-8 py-4 rounded-xl hover:bg-white/5 transition"
             >
-              Or start with Explorer (free)
+              O empieza con Explorador (gratis)
             </Link>
           </div>
           <p className="text-xs text-gray-600 mt-6">
-            Cancel anytime · 7-day money-back guarantee · No spam
+            Cancela cuando quieras · Garantía de devolución 7 días · Sin spam
           </p>
         </div>
       </section>

@@ -17,10 +17,10 @@ type Alert = {
 }
 
 const DEAL_TYPE_OPTIONS = [
-  { value: "error_fare", label: "⚡ Error Fares" },
-  { value: "miles", label: "🏆 Miles Deals" },
+  { value: "error_fare", label: "⚡ Tarifas Error" },
+  { value: "miles", label: "🏆 Ofertas con Millas" },
   { value: "flash_sale", label: "🔔 Flash Sales" },
-  { value: "voucher", label: "💳 Vouchers" },
+  { value: "voucher", label: "💳 Bonos" },
 ]
 
 const CHANNEL_OPTIONS = [
@@ -136,7 +136,7 @@ export default function AlertsPage() {
   if (loading) {
     return (
       <div className="pt-20 min-h-screen flex items-center justify-center">
-        <div className="text-gray-500">Loading...</div>
+        <div className="text-gray-500">Cargando...</div>
       </div>
     )
   }
@@ -148,17 +148,17 @@ export default function AlertsPage() {
         <div className="flex flex-wrap items-start justify-between gap-4 mb-10">
           <div>
             <h1 className="text-3xl font-black">
-              My <span className="gold">Alerts</span>
+              Mis <span className="gold">Alertas</span>
             </h1>
             <p className="text-gray-500 mt-1 text-sm">
-              Get notified instantly when matching deals are posted.
+              Recibe una notificación al instante cuando se publiquen ofertas que coincidan.
             </p>
           </div>
           <Link
             href="/dashboard"
             className="text-sm text-gray-500 hover:text-gray-300"
           >
-            ← Dashboard
+            ← Panel
           </Link>
         </div>
 
@@ -170,16 +170,16 @@ export default function AlertsPage() {
           >
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <h2 className="font-black text-lg mb-1">Alerts are a Premium feature</h2>
+                <h2 className="font-black text-lg mb-1">Las alertas son una función Premium</h2>
                 <p className="text-gray-400 text-sm">
-                  Upgrade to create custom alerts and receive instant Telegram + email notifications.
+                  Mejora para crear alertas personalizadas y recibir notificaciones instantáneas por Telegram y email.
                 </p>
               </div>
               <Link
                 href="/pricing"
                 className="gradient-gold text-black font-black text-sm px-5 py-2.5 rounded-full whitespace-nowrap"
               >
-                Upgrade →
+                Mejorar →
               </Link>
             </div>
           </div>
@@ -188,18 +188,18 @@ export default function AlertsPage() {
         <div className="grid md:grid-cols-2 gap-8">
           {/* Left: Create alert */}
           <div>
-            <h2 className="text-xl font-black mb-4">Create Alert</h2>
+            <h2 className="text-xl font-black mb-4">Crear Alerta</h2>
             <form
               onSubmit={handleCreateAlert}
               className="deal-card rounded-2xl p-6 space-y-4"
             >
               <div>
                 <label className="block text-xs text-gray-500 mb-1.5 font-semibold uppercase tracking-wide">
-                  Origin (optional)
+                  Origen (opcional)
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. MAD, BCN, LIS"
+                  placeholder="p.ej. MAD, BCN, LIS"
                   value={form.origin}
                   onChange={(e) => setForm({ ...form, origin: e.target.value.toUpperCase() })}
                   disabled={!isPremium}
@@ -209,11 +209,11 @@ export default function AlertsPage() {
 
               <div>
                 <label className="block text-xs text-gray-500 mb-1.5 font-semibold uppercase tracking-wide">
-                  Destination (optional)
+                  Destino (opcional)
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. JFK, NRT, DXB"
+                  placeholder="p.ej. JFK, NRT, DXB"
                   value={form.destination}
                   onChange={(e) => setForm({ ...form, destination: e.target.value.toUpperCase() })}
                   disabled={!isPremium}
@@ -223,11 +223,11 @@ export default function AlertsPage() {
 
               <div>
                 <label className="block text-xs text-gray-500 mb-1.5 font-semibold uppercase tracking-wide">
-                  Max Price (€, optional)
+                  Precio máximo (€, opcional)
                 </label>
                 <input
                   type="number"
-                  placeholder="e.g. 500"
+                  placeholder="p.ej. 500"
                   value={form.max_price}
                   onChange={(e) => setForm({ ...form, max_price: e.target.value })}
                   disabled={!isPremium}
@@ -237,7 +237,7 @@ export default function AlertsPage() {
 
               <div>
                 <label className="block text-xs text-gray-500 mb-2 font-semibold uppercase tracking-wide">
-                  Deal Types
+                  Tipos de oferta
                 </label>
                 <div className="grid grid-cols-2 gap-2">
                   {DEAL_TYPE_OPTIONS.map((opt) => (
@@ -260,7 +260,7 @@ export default function AlertsPage() {
 
               <div>
                 <label className="block text-xs text-gray-500 mb-2 font-semibold uppercase tracking-wide">
-                  Notify via
+                  Notificar por
                 </label>
                 <div className="flex gap-2">
                   {CHANNEL_OPTIONS.map((opt) => (
@@ -286,22 +286,22 @@ export default function AlertsPage() {
                 disabled={!isPremium || saving}
                 className="w-full gradient-gold text-black font-black py-2.5 rounded-lg text-sm disabled:opacity-40 disabled:cursor-not-allowed"
               >
-                {saving ? "Saving..." : "Create Alert"}
+                {saving ? "Guardando..." : "Crear Alerta"}
               </button>
             </form>
 
             {/* Telegram Connect */}
             <div className="deal-card rounded-2xl p-6 mt-6">
-              <h3 className="font-black mb-1">📱 Telegram Notifications</h3>
+              <h3 className="font-black mb-1">📱 Notificaciones Telegram</h3>
               <p className="text-gray-500 text-sm mb-4">
                 {telegramConnected
-                  ? "Your Telegram is connected. You'll receive instant deal alerts."
-                  : "Connect Telegram to receive instant push notifications for new deals."}
+                  ? "Tu Telegram está conectado. Recibirás alertas de ofertas al instante."
+                  : "Conecta Telegram para recibir notificaciones push instantáneas cuando haya nuevas ofertas."}
               </p>
 
               {telegramConnected ? (
                 <div className="flex items-center gap-2 text-green-400 text-sm font-semibold">
-                  <span>✓ Connected</span>
+                  <span>✓ Conectado</span>
                 </div>
               ) : (
                 <div>
@@ -311,24 +311,24 @@ export default function AlertsPage() {
                       disabled={loadingCode || !isPremium}
                       className="gradient-gold text-black font-black text-sm px-5 py-2.5 rounded-full disabled:opacity-40 disabled:cursor-not-allowed"
                     >
-                      {loadingCode ? "Generating..." : "Connect Telegram"}
+                      {loadingCode ? "Generando..." : "Conectar Telegram"}
                     </button>
                   ) : (
                     <div className="space-y-3">
                       <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-                        <p className="text-xs text-gray-500 mb-2">Your one-time code (valid 10 min):</p>
+                        <p className="text-xs text-gray-500 mb-2">Tu código de un solo uso (válido 10 min):</p>
                         <p className="text-3xl font-black tracking-widest gold text-center">{connectCode}</p>
                       </div>
                       <div className="bg-white/5 border border-white/10 rounded-xl p-4 text-sm text-gray-400 space-y-1">
-                        <p>1. Open Telegram and search <span className="text-white font-semibold">@Getflatbedbot</span></p>
-                        <p>2. Send: <code className="text-yellow-400 bg-yellow-500/10 px-1 rounded">/connect {connectCode}</code></p>
-                        <p>3. Done! ✅</p>
+                        <p>1. Abre Telegram y busca <span className="text-white font-semibold">@Getflatbedbot</span></p>
+                        <p>2. Envía: <code className="text-yellow-400 bg-yellow-500/10 px-1 rounded">/connect {connectCode}</code></p>
+                        <p>3. ¡Listo! ✅</p>
                       </div>
                       <button
                         onClick={handleGetCode}
                         className="text-xs text-gray-500 hover:text-gray-300"
                       >
-                        Generate new code
+                        Generar nuevo código
                       </button>
                     </div>
                   )}
@@ -340,14 +340,14 @@ export default function AlertsPage() {
           {/* Right: Active alerts list */}
           <div>
             <h2 className="text-xl font-black mb-4">
-              Active Alerts{" "}
+              Alertas Activas{" "}
               <span className="text-gray-600 font-normal text-base">({alerts.length})</span>
             </h2>
 
             {alerts.length === 0 ? (
               <div className="deal-card rounded-2xl p-8 text-center text-gray-500">
                 <div className="text-4xl mb-3">🔔</div>
-                <p className="text-sm">No alerts yet. Create one to get notified!</p>
+                <p className="text-sm">Aún no tienes alertas. ¡Crea una para recibir notificaciones!</p>
               </div>
             ) : (
               <div className="space-y-3">
@@ -356,11 +356,11 @@ export default function AlertsPage() {
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1 min-w-0">
                         <div className="font-black text-sm">
-                          {alert.origin || "Any"} → {alert.destination || "Any"}
+                          {alert.origin || "Cualquier origen"} → {alert.destination || "Cualquier destino"}
                         </div>
                         {alert.max_price && (
                           <div className="text-xs text-gray-500 mt-0.5">
-                            Max €{alert.max_price}
+                            Máx €{alert.max_price}
                           </div>
                         )}
                         <div className="flex flex-wrap gap-1 mt-2">
@@ -374,7 +374,7 @@ export default function AlertsPage() {
                                 </span>
                               ))
                             : (
-                              <span className="text-xs text-gray-600">All types</span>
+                              <span className="text-xs text-gray-600">Todos los tipos</span>
                             )}
                         </div>
                         <div className="flex gap-1 mt-1.5">
@@ -391,7 +391,7 @@ export default function AlertsPage() {
                       <button
                         onClick={() => handleDeleteAlert(alert.id)}
                         className="text-gray-600 hover:text-red-400 text-lg leading-none flex-shrink-0"
-                        title="Delete alert"
+                        title="Eliminar alerta"
                       >
                         ×
                       </button>

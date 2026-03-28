@@ -25,10 +25,10 @@ interface DealsClientProps {
 }
 
 const dealTypeLabels: Record<string, string> = {
-  error_fare: "⚡ Error fare",
-  miles: "🏆 Miles deal",
+  error_fare: "⚡ Tarifa error",
+  miles: "🏆 Oferta con millas",
   flash_sale: "🔔 Flash sale",
-  voucher: "💳 Voucher",
+  voucher: "💳 Bono",
 };
 
 const dealTypeColors: Record<string, string> = {
@@ -38,31 +38,31 @@ const dealTypeColors: Record<string, string> = {
   voucher: "text-green-400 bg-green-400/10 border-green-400/20",
 };
 
-const filterTypeOptions = ["All", "Error fare", "Miles deal", "Flash sale"];
-const filterOrigins = ["All", "MAD", "BCN", "BOG", "MEX", "EZE", "MIA"];
-const savingsOptions = ["Any", "50%+", "70%+", "80%+", "90%+"];
+const filterTypeOptions = ["Todos", "Tarifa error", "Oferta con millas", "Flash sale"];
+const filterOrigins = ["Todos", "MAD", "BCN", "BOG", "MEX", "EZE", "MIA"];
+const savingsOptions = ["Cualquier", "50%+", "70%+", "80%+", "90%+"];
 
 function getDealTypeFilter(deal: Deal, filter: string) {
-  if (filter === "All") return true;
+  if (filter === "Todos") return true;
   const map: Record<string, string> = {
-    "Error fare": "error_fare",
-    "Miles deal": "miles",
+    "Tarifa error": "error_fare",
+    "Oferta con millas": "miles",
     "Flash sale": "flash_sale",
   };
   return deal.type === map[filter];
 }
 
 function getSavingsFilter(deal: Deal, filter: string) {
-  if (filter === "Any") return true;
+  if (filter === "Cualquier") return true;
   const pct = deal.savings_pct || 0;
   const threshold = parseInt(filter);
   return pct >= threshold;
 }
 
 export default function DealsClient({ deals, isLoggedIn, isPremium }: DealsClientProps) {
-  const [filterType, setFilterType] = useState("All");
-  const [filterOrigin, setFilterOrigin] = useState("All");
-  const [minSavings, setMinSavings] = useState("Any");
+  const [filterType, setFilterType] = useState("Todos");
+  const [filterOrigin, setFilterOrigin] = useState("Todos");
+  const [minSavings, setMinSavings] = useState("Cualquier");
   const [loginEmail, setLoginEmail] = useState("");
   const [loginSubmitted, setLoginSubmitted] = useState(false);
 
@@ -74,7 +74,7 @@ export default function DealsClient({ deals, isLoggedIn, isPremium }: DealsClien
 
   const filtered = deals.filter((d) => {
     if (!getDealTypeFilter(d, filterType)) return false;
-    if (filterOrigin !== "All" && d.origin !== filterOrigin) return false;
+    if (filterOrigin !== "Todos" && d.origin !== filterOrigin) return false;
     if (!getSavingsFilter(d, minSavings)) return false;
     return true;
   });
@@ -92,11 +92,11 @@ export default function DealsClient({ deals, isLoggedIn, isPremium }: DealsClien
           {/* SIDEBAR */}
           <aside className="lg:w-64 flex-shrink-0">
             <div className="deal-card rounded-2xl p-6 sticky top-24">
-              <h3 className="font-bold text-sm mb-6">Filter deals</h3>
+              <h3 className="font-bold text-sm mb-6">Filtrar ofertas</h3>
 
               <div className="mb-6">
                 <label className="text-xs font-bold text-gray-500 uppercase tracking-wide block mb-3">
-                  Deal type
+                  Tipo de oferta
                 </label>
                 <div className="space-y-2">
                   {filterTypeOptions.map((t) => (
@@ -117,7 +117,7 @@ export default function DealsClient({ deals, isLoggedIn, isPremium }: DealsClien
 
               <div className="mb-6">
                 <label className="text-xs font-bold text-gray-500 uppercase tracking-wide block mb-3">
-                  Origin
+                  Origen
                 </label>
                 <select
                   value={filterOrigin}
@@ -134,7 +134,7 @@ export default function DealsClient({ deals, isLoggedIn, isPremium }: DealsClien
 
               <div>
                 <label className="text-xs font-bold text-gray-500 uppercase tracking-wide block mb-3">
-                  Minimum savings
+                  Ahorro mínimo
                 </label>
                 <div className="grid grid-cols-2 gap-2">
                   {savingsOptions.map((s) => (
@@ -159,21 +159,21 @@ export default function DealsClient({ deals, isLoggedIn, isPremium }: DealsClien
           <main className="flex-1 min-w-0">
             <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
               <div>
-                <h1 className="text-3xl font-black">Current Deals</h1>
+                <h1 className="text-3xl font-black">Ofertas Actuales</h1>
                 <p className="text-gray-500 text-sm mt-1">
-                  {filtered.length} active deals
+                  {filtered.length} ofertas activas
                 </p>
               </div>
               <div className="flex items-center gap-2 text-xs bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 px-4 py-2 rounded-full">
                 <span className="w-2 h-2 rounded-full bg-yellow-400 pulse" />
-                Live data
+                Datos en directo
               </div>
             </div>
 
             {filtered.length === 0 ? (
               <div className="deal-card rounded-xl p-12 text-center text-gray-500">
                 <div className="text-4xl mb-3">✈️</div>
-                <p>No deals match your filters. Try adjusting them.</p>
+                <p>Ninguna oferta coincide con tus filtros. Prueba a ajustarlos.</p>
               </div>
             ) : (
               <>
@@ -218,7 +218,7 @@ export default function DealsClient({ deals, isLoggedIn, isPremium }: DealsClien
                               </div>
                               {deal.savings_pct && (
                                 <div className="text-green-400 text-sm font-bold">
-                                  {deal.savings_pct}% off
+                                  {deal.savings_pct}% dto.
                                 </div>
                               )}
                             </div>
@@ -234,12 +234,12 @@ export default function DealsClient({ deals, isLoggedIn, isPremium }: DealsClien
                           <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-black/50">
                             <div className="text-center px-4">
                               <div className="text-2xl mb-2">🔒</div>
-                              <p className="text-xs text-gray-300 mb-3">Premium deal</p>
+                              <p className="text-xs text-gray-300 mb-3">Oferta Premium</p>
                               <Link
                                 href="/pricing"
                                 className="text-xs gradient-gold text-black font-bold px-4 py-2 rounded-full"
                               >
-                                Upgrade to unlock
+                                Mejora para desbloquear
                               </Link>
                             </div>
                           </div>
@@ -268,21 +268,21 @@ export default function DealsClient({ deals, isLoggedIn, isPremium }: DealsClien
                       <div className="text-center max-w-sm px-6">
                         <div className="text-5xl mb-4">🔒</div>
                         <h3 className="text-2xl font-black mb-2">
-                          Unlock all {deals.length} deals
+                          Desbloquea las {deals.length} ofertas
                         </h3>
                         <p className="text-gray-400 text-sm mb-6">
-                          Join free to see all current deals. Premium members get instant alerts.
+                          Únete gratis para ver todas las ofertas actuales. Los miembros Premium reciben alertas instantáneas.
                         </p>
                         {loginSubmitted ? (
                           <p className="text-green-400 font-bold">
-                            You&apos;re in! Check your inbox.
+                            ¡Ya eres miembro! Revisa tu bandeja de entrada.
                           </p>
                         ) : (
                           <>
                             <form onSubmit={handleLoginSubmit} className="flex flex-col gap-3 mb-4">
                               <input
                                 type="email"
-                                placeholder="your@email.com"
+                                placeholder="tu@email.com"
                                 required
                                 value={loginEmail}
                                 onChange={(e) => setLoginEmail(e.target.value)}
@@ -292,16 +292,16 @@ export default function DealsClient({ deals, isLoggedIn, isPremium }: DealsClien
                                 type="submit"
                                 className="gradient-gold text-black font-bold px-6 py-3 rounded-xl hover:opacity-90 transition"
                               >
-                                Join free — Unlock all deals
+                                Únete gratis — Ver todas las ofertas
                               </button>
                             </form>
                             <p className="text-xs text-gray-600">
-                              Already a member?{" "}
+                              ¿Ya tienes cuenta?{" "}
                               <Link
                                 href="/login"
                                 className="text-yellow-500 hover:text-yellow-400"
                               >
-                                Log in
+                                Iniciar sesión
                               </Link>
                             </p>
                           </>

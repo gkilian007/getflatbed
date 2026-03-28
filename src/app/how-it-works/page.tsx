@@ -4,44 +4,44 @@ import { useState } from "react";
 
 const faqs = [
   {
-    question: "Are error fares legal?",
+    question: "¿Son legales las tarifas error?",
     answer:
-      "Yes, in the vast majority of cases. When an airline publishes a fare — even by mistake — and you book it, you have a valid contract. Most airlines honor these bookings to avoid reputational damage. In rare cases they may cancel and refund you, but this is the exception, not the rule. We only alert to fares that have a high likelihood of being honored.",
+      "Sí, en la gran mayoría de los casos. Cuando una aerolínea publica una tarifa — aunque sea por error — y la reservas, tienes un contrato válido. La mayoría de las aerolíneas honran estas reservas para evitar daño reputacional. En casos excepcionales pueden cancelar y reembolsarte, pero eso es la excepción, no la norma. Solo alertamos de tarifas con alta probabilidad de ser honradas.",
   },
   {
-    question: "What if the airline cancels my ticket?",
+    question: "¿Qué pasa si la aerolínea cancela mi billete?",
     answer:
-      "If an airline cancels an error fare booking, they are legally required to refund you in full. You won't lose money. That said, we recommend not booking non-refundable hotels until your ticket is confirmed (usually 24-48h after booking).",
+      "Si una aerolínea cancela una reserva de tarifa error, está legalmente obligada a reembolsarte íntegramente. No perderás dinero. Dicho esto, recomendamos no reservar hoteles no reembolsables hasta que tu billete esté confirmado (normalmente 24-48h después de la reserva).",
   },
   {
-    question: "Can I trust miles deals?",
+    question: "¿Puedo fiarme de las ofertas con millas?",
     answer:
-      "Absolutely. Miles deals use legitimate frequent flyer programs — Turkish Miles&Smiles, Flying Blue, Iberia Avios — to book business class seats at drastically reduced redemption rates. These are not hacks or workarounds; they are the programs working as intended, just optimized.",
+      "Absolutamente. Las ofertas con millas utilizan programas legítimos de viajero frecuente — Turkish Miles&Smiles, Flying Blue, Iberia Avios — para reservar asientos de business class a tasas de canje drásticamente reducidas. No son trucos ni atajos; son los programas funcionando como están diseñados, simplemente optimizados.",
   },
   {
-    question: "Do I need a specific credit card?",
+    question: "¿Necesito una tarjeta de crédito específica?",
     answer:
-      "Not for most deals. Error fares and flash sales just require a payment card. For miles deals, you need points in a specific program. Our guides explain exactly how to earn points quickly — often through credit card sign-up bonuses that give you 50,000+ points immediately.",
+      "No para la mayoría de las ofertas. Las tarifas error y las flash sales solo requieren una tarjeta de pago. Para las ofertas con millas, necesitas puntos en un programa concreto. Nuestras guías explican exactamente cómo acumular puntos rápidamente — a menudo a través de bonos de bienvenida de tarjetas que te dan 50.000+ puntos de inmediato.",
   },
   {
-    question: "Are alerts personalized?",
+    question: "¿Las alertas son personalizadas?",
     answer:
-      "Premium members can set origin airports, dream destinations, and deal type preferences. Our algorithm then prioritizes relevant deals. Explorer members receive our curated weekly digest of the best deals across all routes.",
+      "Los miembros Premium pueden configurar aeropuertos de origen, destinos soñados y preferencias de tipo de oferta. Nuestro algoritmo prioriza entonces las ofertas relevantes. Los miembros Explorador reciben nuestro resumen semanal con las mejores ofertas de todas las rutas.",
   },
   {
-    question: "How fast do I need to act?",
+    question: "¿Con qué rapidez hay que actuar?",
     answer:
-      "Error fares typically last 2–6 hours before the airline corrects the price. Flash sales can last up to 48 hours. That's why Premium members receive instant Telegram alerts — so you can act within minutes, not hours.",
+      "Las tarifas error suelen durar 2–6 horas antes de que la aerolínea corrija el precio. Las flash sales pueden durar hasta 48 horas. Por eso los miembros Premium reciben alertas instantáneas por Telegram — para que puedas actuar en minutos, no en horas.",
   },
   {
-    question: "Do you send spam?",
+    question: "¿Enviais spam?",
     answer:
-      "Never. We only send alerts when there's a genuine deal worth your attention. Premium members get instant alerts (1-3 per week on average). Explorer members get a weekly digest. You can adjust frequency or unsubscribe anytime with one click.",
+      "Nunca. Solo enviamos alertas cuando hay una oferta genuina que merece tu atención. Los miembros Premium reciben alertas instantáneas (1-3 por semana de media). Los miembros Explorador reciben un resumen semanal. Puedes ajustar la frecuencia o darte de baja en cualquier momento con un clic.",
   },
   {
-    question: "Can I cancel anytime?",
+    question: "¿Puedo cancelar en cualquier momento?",
     answer:
-      "Yes. No contracts, no commitments. Cancel your Premium subscription anytime from your account settings and you won't be charged again. We also offer a 7-day money-back guarantee on new Premium subscriptions, no questions asked.",
+      "Sí. Sin contratos, sin compromisos. Cancela tu suscripción Premium en cualquier momento desde los ajustes de tu cuenta y no se te cobrará más. También ofrecemos una garantía de devolución de 7 días en nuevas suscripciones Premium, sin preguntas.",
   },
 ];
 
@@ -62,17 +62,17 @@ export default function HowItWorksPage() {
       <section className="py-28 px-6 text-center">
         <div className="max-w-3xl mx-auto">
           <span className="text-xs font-bold tracking-widest text-yellow-500 uppercase">
-            Behind the scenes
+            Detrás de las cámaras
           </span>
           <h1 className="text-5xl md:text-6xl font-black mt-4 mb-6 leading-tight">
-            How we find deals
+            Cómo encontramos ofertas
             <br />
-            <span className="gold">nobody else does</span>
+            <span className="gold">que nadie más encuentra</span>
           </h1>
           <p className="text-xl text-gray-400 leading-relaxed">
-            While everyone else books at full price, our team monitors hundreds
-            of sources around the clock — catching pricing mistakes, redemption
-            sweet spots, and limited-time sales the moment they go live.
+            Mientras todos los demás reservan a precio completo, nuestro equipo monitoriza cientos
+            de fuentes sin descanso — captando errores de precio, sweet spots de canje y ventas
+            limitadas en el momento exacto en que aparecen.
           </p>
         </div>
       </section>
@@ -84,49 +84,49 @@ export default function HowItWorksPage() {
             <div>
               <span className="text-4xl mb-6 block">⚡</span>
               <span className="text-xs font-bold tracking-widest text-red-400 uppercase mb-3 block">
-                Source 1
+                Fuente 1
               </span>
               <h2 className="text-3xl md:text-4xl font-black mb-6">
-                Error Fares
+                Tarifas Error
               </h2>
               <div className="space-y-5 text-gray-400 leading-relaxed">
                 <p>
-                  <strong className="text-white">What is an error fare?</strong>{" "}
-                  Airlines publish millions of fares daily across hundreds of
-                  booking systems. Occasionally, a human input error, currency
-                  conversion glitch, or system bug creates a price that&apos;s
-                  90%+ below the actual value. These are error fares.
+                  <strong className="text-white">¿Qué es una tarifa error?</strong>{" "}
+                  Las aerolíneas publican millones de tarifas al día en cientos de
+                  sistemas de reservas. En ocasiones, un error humano, un fallo de
+                  conversión de moneda o un bug del sistema crea un precio un
+                  90%+ por debajo del valor real. Esas son las tarifas error.
                 </p>
                 <p>
-                  <strong className="text-white">Why are they legal?</strong> In
-                  most jurisdictions, when an airline publishes and accepts
-                  payment for a fare, a contract is formed. Airlines almost
-                  always honor these bookings to protect their brand reputation.
+                  <strong className="text-white">¿Por qué son legales?</strong> En
+                  la mayoría de jurisdicciones, cuando una aerolínea publica y acepta
+                  el pago de una tarifa, se forma un contrato. Las aerolíneas casi
+                  siempre honran estas reservas para proteger su reputación de marca.
                 </p>
                 <p>
                   <strong className="text-white">
-                    How long do they last?
+                    ¿Cuánto tiempo duran?
                   </strong>{" "}
-                  Typically 2–6 hours. Once the airline notices, the price is
-                  corrected. This is why instant alerts are critical — waiting
-                  until tomorrow means missing the deal entirely.
+                  Normalmente 2–6 horas. Una vez que la aerolínea se da cuenta, corrige el precio.
+                  Por eso las alertas instantáneas son críticas — esperar hasta mañana significa
+                  perderte la oferta por completo.
                 </p>
                 <p>
-                  <strong className="text-white">What we do:</strong> The moment
-                  we detect an error fare, we verify it manually, confirm
-                  booking works, and push an instant alert to Premium members
-                  via Telegram and email simultaneously.
+                  <strong className="text-white">Lo que hacemos:</strong> En el momento en
+                  que detectamos una tarifa error, la verificamos manualmente, confirmamos
+                  que la reserva funciona y enviamos una alerta instantánea a los miembros
+                  Premium por Telegram y email simultáneamente.
                 </p>
               </div>
             </div>
             <div className="deal-card rounded-2xl p-8">
               <div className="text-xs font-bold text-gray-600 mb-4 uppercase tracking-wide">
-                Example error fare
+                Ejemplo de tarifa error
               </div>
               <div className="flex justify-between items-start mb-6">
                 <div>
                   <div className="text-xs bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full inline-block mb-2">
-                    ⚡ Error fare
+                    ⚡ Tarifa error
                   </div>
                   <h3 className="text-xl font-bold">Madrid → Bangkok</h3>
                   <p className="text-xs text-gray-500">
@@ -135,18 +135,18 @@ export default function HowItWorksPage() {
                 </div>
                 <div className="text-right">
                   <div className="text-xs text-gray-600 line-through">
-                    €4,200
+                    €4.200
                   </div>
                   <div className="text-3xl font-black text-green-400">€280</div>
                   <div className="text-xs text-yellow-500 font-semibold">
-                    93% off
+                    93% dto.
                   </div>
                 </div>
               </div>
               <div className="text-xs text-gray-600 bg-white/5 rounded-lg p-3">
-                🕐 Alert sent at 14:32 · Deal expired at 17:15
+                🕐 Alerta enviada a las 14:32 · Oferta expiró a las 17:15
                 <br />
-                ✅ 47 members booked in time
+                ✅ 47 miembros reservaron a tiempo
               </div>
             </div>
           </div>
@@ -162,14 +162,14 @@ export default function HowItWorksPage() {
                 className="deal-card rounded-2xl p-6 overflow-x-auto"
               >
                 <div className="text-xs font-bold text-gray-600 mb-4 uppercase tracking-wide">
-                  Program comparison
+                  Comparativa de programas
                 </div>
                 <table className="w-full text-xs">
                   <thead>
                     <tr className="text-gray-600 border-b border-white/10">
-                      <th className="text-left py-2">Program</th>
-                      <th className="text-left py-2">Best route</th>
-                      <th className="text-right py-2">Points</th>
+                      <th className="text-left py-2">Programa</th>
+                      <th className="text-left py-2">Mejor ruta</th>
+                      <th className="text-right py-2">Puntos</th>
                     </tr>
                   </thead>
                   <tbody className="text-gray-400 space-y-2">
@@ -200,31 +200,31 @@ export default function HowItWorksPage() {
             <div className="order-1 md:order-2">
               <span className="text-4xl mb-6 block">🏆</span>
               <span className="text-xs font-bold tracking-widest text-blue-400 uppercase mb-3 block">
-                Source 2
+                Fuente 2
               </span>
               <h2 className="text-3xl md:text-4xl font-black mb-6">
-                Miles & Points Hacks
+                Trucos con Millas y Puntos
               </h2>
               <div className="space-y-5 text-gray-400 leading-relaxed">
                 <p>
-                  <strong className="text-white">The big alliances:</strong>{" "}
-                  Oneworld, SkyTeam, and Star Alliance let you use points from
-                  one airline to book seats on partner carriers — often at a
-                  fraction of the &quot;standard&quot; redemption rate.
+                  <strong className="text-white">Las grandes alianzas:</strong>{" "}
+                  Oneworld, SkyTeam y Star Alliance te permiten usar puntos de
+                  una aerolínea para reservar asientos en aerolíneas asociadas — a menudo
+                  a una fracción de la tasa de canje &quot;estándar&quot;.
                 </p>
                 <p>
-                  <strong className="text-white">The secret programs:</strong>{" "}
-                  Turkish Miles&amp;Smiles lets you fly business class on United,
-                  Lufthansa, or Singapore for as little as 45,000 points.
-                  Flying Blue frequently runs 50% off promos on business class.
+                  <strong className="text-white">Los programas secretos:</strong>{" "}
+                  Turkish Miles&amp;Smiles te permite volar en business en United,
+                  Lufthansa o Singapore desde 45.000 puntos.
+                  Flying Blue hace frecuentes promos con 50% de descuento en business class.
                 </p>
                 <p>
                   <strong className="text-white">
-                    How to earn without flying:
+                    Cómo acumular sin volar:
                   </strong>{" "}
-                  Credit card sign-up bonuses in Spain can give you 50,000–
-                  80,000 points instantly. Hotel transfers, shopping portals,
-                  and partner programs top up your balance fast.
+                  Los bonos de bienvenida de tarjetas de crédito en España pueden darte
+                  50.000–80.000 puntos de golpe. Las transferencias de hoteles, los portales de
+                  compras y los programas asociados completan tu saldo rápidamente.
                 </p>
               </div>
             </div>
@@ -239,41 +239,39 @@ export default function HowItWorksPage() {
             <div>
               <span className="text-4xl mb-6 block">🔼</span>
               <span className="text-xs font-bold tracking-widest text-purple-400 uppercase mb-3 block">
-                Source 3
+                Fuente 3
               </span>
               <h2 className="text-3xl md:text-4xl font-black mb-6">
-                Upgrades & Vouchers
+                Upgrades y Bonos
               </h2>
               <div className="space-y-5 text-gray-400 leading-relaxed">
                 <p>
                   <strong className="text-white">
-                    Companion certificates:
+                    Certificados de acompañante:
                   </strong>{" "}
-                  Many premium credit cards include a &quot;companion
-                  certificate&quot; — one free or heavily discounted business
-                  class ticket when you buy one at full price. We show you which
-                  cards offer this and which routes to pair them with.
+                  Muchas tarjetas premium incluyen un &quot;certificado de acompañante&quot;
+                  — un billete de business class gratuito o muy descontado cuando compras uno
+                  al precio completo. Te mostramos qué tarjetas lo ofrecen y con qué rutas combinarlos.
                 </p>
                 <p>
-                  <strong className="text-white">Bid upgrades:</strong>{" "}
-                  Airlines like Iberia, British Airways, and Lufthansa offer
-                  upgrade auctions (via Plusgrade) where economy passengers
-                  bid for unsold business seats. Winning bids are often 60–80%
-                  below the upgrade fare.
+                  <strong className="text-white">Subastas de upgrade:</strong>{" "}
+                  Aerolíneas como Iberia, British Airways y Lufthansa ofrecen
+                  subastas de upgrade (via Plusgrade) donde los pasajeros de turista
+                  pujan por asientos de business no vendidos. Las pujas ganadoras suelen ser
+                  un 60–80% por debajo del precio del upgrade.
                 </p>
                 <p>
                   <strong className="text-white">
-                    Last-minute counters:
+                    Mostrador de última hora:
                   </strong>{" "}
-                  Within 48 hours of departure, airlines sometimes sell unsold
-                  premium seats at steep discounts. We monitor these windows and
-                  alert you when a relevant route drops.
+                  Dentro de las 48 horas antes de la salida, las aerolíneas a veces venden
+                  asientos premium no vendidos con grandes descuentos. Monitorizamos estas
+                  ventanas y te alertamos cuando una ruta relevante baja de precio.
                 </p>
                 <p>
-                  <strong className="text-white">Status match:</strong> Flying
-                  business class on a competitor? You can often match your elite
-                  status to another airline — giving you upgrade priority,
-                  lounge access, and bonus miles from day one.
+                  <strong className="text-white">Status match:</strong> ¿Vuela en business
+                  con un competidor? A menudo puedes emparejar tu estatus élite con otra aerolínea
+                  — dándote prioridad de upgrade, acceso a sala VIP y millas bonus desde el primer día.
                 </p>
               </div>
             </div>
@@ -281,23 +279,23 @@ export default function HowItWorksPage() {
               {[
                 {
                   icon: "🎫",
-                  title: "Companion Cert",
-                  desc: "2-for-1 business tickets",
+                  title: "Cert. Acompañante",
+                  desc: "2 billetes business por el precio de 1",
                 },
                 {
                   icon: "🔨",
-                  title: "Bid Upgrade",
-                  desc: "Auction for empty seats",
+                  title: "Subasta Upgrade",
+                  desc: "Puja por asientos vacíos",
                 },
                 {
                   icon: "⏱️",
-                  title: "Last Minute",
-                  desc: "48h before departure",
+                  title: "Última Hora",
+                  desc: "48h antes de la salida",
                 },
                 {
                   icon: "⭐",
                   title: "Status Match",
-                  desc: "Instant elite benefits",
+                  desc: "Beneficios élite al instante",
                 },
               ].map((item) => (
                 <div
@@ -319,10 +317,10 @@ export default function HowItWorksPage() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <span className="text-xs font-bold tracking-widest text-yellow-500 uppercase">
-              Our process
+              Nuestro proceso
             </span>
             <h2 className="text-3xl md:text-4xl font-black mt-3">
-              From discovery to your inbox
+              Del descubrimiento a tu bandeja de entrada
             </h2>
           </div>
 
@@ -332,26 +330,26 @@ export default function HowItWorksPage() {
               {[
                 {
                   step: "01",
-                  title: "Monitor 200+ sources",
-                  desc: "We track airline websites, GDS systems, booking aggregators, and community tip sources — 24 hours a day, 7 days a week, 365 days a year. No deal escapes our net.",
+                  title: "Monitorizamos más de 200 fuentes",
+                  desc: "Seguimos webs de aerolíneas, sistemas GDS, agregadores de reservas y fuentes de la comunidad — las 24 horas del día, 7 días a la semana, 365 días al año. Ninguna oferta escapa a nuestra red.",
                   icon: "🔍",
                 },
                 {
                   step: "02",
-                  title: "Manual verification",
-                  desc: "Every potential deal is checked by a human before we send any alert. We verify the fare is actually bookable, confirm the routing makes sense, and estimate how long it will last.",
+                  title: "Verificación manual",
+                  desc: "Cada oferta potencial es revisada por una persona antes de enviar ninguna alerta. Verificamos que la tarifa es realmente reservable, confirmamos que la ruta tiene sentido y estimamos cuánto durará.",
                   icon: "✅",
                 },
                 {
                   step: "03",
-                  title: "Instant alert sent",
-                  desc: "Premium members receive a Telegram message and email simultaneously — usually within 5 minutes of our team confirming the deal. Explorer members receive the best deals in their weekly digest.",
+                  title: "Alerta instantánea enviada",
+                  desc: "Los miembros Premium reciben un mensaje de Telegram y un email simultáneamente — normalmente en 5 minutos desde que nuestro equipo confirma la oferta. Los miembros Explorador reciben las mejores ofertas en su resumen semanal.",
                   icon: "⚡",
                 },
                 {
                   step: "04",
-                  title: "You book directly",
-                  desc: "We link directly to the airline's website. No middleman, no booking fees. You book and pay the airline directly, keeping full control and the airline's customer service.",
+                  title: "Tú reservas directamente",
+                  desc: "Enlazamos directamente a la web de la aerolínea. Sin intermediarios, sin comisiones de reserva. Tú reservas y pagas a la aerolínea directamente, manteniendo el control total y el servicio de atención al cliente.",
                   icon: "🛫",
                 },
               ].map((item, i) => (
@@ -383,7 +381,7 @@ export default function HowItWorksPage() {
               FAQ
             </span>
             <h2 className="text-3xl md:text-4xl font-black mt-3">
-              Questions & answers
+              Preguntas y respuestas
             </h2>
           </div>
 
@@ -414,15 +412,14 @@ export default function HowItWorksPage() {
       <section className="py-20 px-6 border-t border-white/5 text-center">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-black mb-4">
-            Ready to fly business for less?
+            ¿Listo para volar en business por menos?
           </h2>
           <p className="text-gray-400 mb-10">
-            Join hundreds of smart travelers who already pay a fraction of the
-            price.
+            Únete a cientos de viajeros inteligentes que ya pagan una fracción del precio.
           </p>
           {submitted ? (
             <p className="text-green-400 font-bold text-lg">
-              You&apos;re in! Check your inbox soon.
+              ¡Ya eres miembro! Revisa tu bandeja de entrada pronto.
             </p>
           ) : (
             <>
@@ -432,7 +429,7 @@ export default function HowItWorksPage() {
               >
                 <input
                   type="email"
-                  placeholder="your@email.com"
+                  placeholder="tu@email.com"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -442,11 +439,11 @@ export default function HowItWorksPage() {
                   type="submit"
                   className="gradient-gold text-black font-black px-7 py-4 rounded-xl hover:opacity-90 transition"
                 >
-                  Get alerts free →
+                  Recibe alertas gratis →
                 </button>
               </form>
               <p className="text-xs text-gray-600 mt-4">
-                Free forever · No credit card · Unsubscribe anytime
+                Siempre gratis · Sin tarjeta · Cancela cuando quieras
               </p>
             </>
           )}
