@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GetFlatbed — Fly Business Class for Less Than You Think</title>
+  <meta name="description" content="Get instant alerts for business class flights at a fraction of the price. Error fares, points deals, and upgrades — curated for smart travelers." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Inter', sans-serif; }
+    .gold { color: #F5C842; }
+    .gold-bg { background-color: #F5C842; }
+    .gold-border { border-color: #F5C842; }
+    .gradient-gold { background: linear-gradient(135deg, #F5C842, #E8A800); }
+    .gradient-dark { background: linear-gradient(180deg, #0a0a0f 0%, #0d0d1a 100%); }
+    .glow { box-shadow: 0 0 60px rgba(245, 200, 66, 0.15); }
+    .card-glow:hover { box-shadow: 0 0 30px rgba(245, 200, 66, 0.1); transition: box-shadow 0.3s ease; }
+    .seat { display: inline-block; width: 18px; height: 18px; background: #F5C842; border-radius: 3px; margin: 2px; opacity: 0.9; }
+    .seat.taken { background: #333; opacity: 0.4; }
+    @keyframes pulse-gold { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+    .pulse { animation: pulse-gold 2s infinite; }
+    @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+    .float { animation: float 4s ease-in-out infinite; }
+    .deal-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); transition: all 0.3s ease; }
+    .deal-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(245,200,66,0.3); transform: translateY(-2px); }
+    input[type="email"] { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: white; }
+    input[type="email"]::placeholder { color: rgba(255,255,255,0.35); }
+    input[type="email"]:focus { outline: none; border-color: #F5C842; box-shadow: 0 0 0 3px rgba(245,200,66,0.15); }
+  </style>
+</head>
+<body class="bg-[#0a0a0f] text-white overflow-x-hidden">
+
+  <!-- NAV -->
+  <nav class="fixed top-0 w-full z-50 backdrop-blur-md border-b border-white/5" style="background: rgba(10,10,15,0.85)">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-2xl">✈️</span>
+        <span class="text-xl font-black tracking-tight">Get<span class="gold">Flatbed</span></span>
+      </div>
+      <div class="hidden md:flex items-center gap-8 text-sm text-gray-400">
+        <a href="#how" class="hover:text-white transition">How it works</a>
+        <a href="#deals" class="hover:text-white transition">Sample deals</a>
+        <a href="#pricing" class="hover:text-white transition">Pricing</a>
+      </div>
+      <a href="#join" class="gradient-gold text-black text-sm font-bold px-5 py-2.5 rounded-full hover:opacity-90 transition">
+        Get early access
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="relative min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-20 text-center overflow-hidden">
+    <!-- Background glow -->
+    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] rounded-full opacity-10 blur-3xl" style="background: radial-gradient(ellipse, #F5C842, transparent 70%)"></div>
+
+    <!-- Badge -->
+    <div class="inline-flex items-center gap-2 rounded-full border border-yellow-500/30 bg-yellow-500/10 px-4 py-1.5 text-sm text-yellow-400 mb-8">
+      <span class="w-2 h-2 rounded-full bg-yellow-400 pulse"></span>
+      Join 200+ early members — limited spots
+    </div>
+
+    <!-- Headline -->
+    <h1 class="text-5xl md:text-7xl font-black tracking-tight leading-[1.05] max-w-5xl mb-6">
+      Stop paying full price<br/>
+      for <span class="gold">Business Class</span>
+    </h1>
+
+    <p class="text-xl md:text-2xl text-gray-400 max-w-2xl mb-4">
+      We find error fares, secret deals, and points hacks so you can fly flatbed<br class="hidden md:block"/> 
+      for <strong class="text-white">up to 90% less</strong> than the listed price.
+    </p>
+
+    <p class="text-sm text-gray-600 mb-10">Madrid → NYC Business. Listed: €3,200 · Found by members: <span class="text-green-400 font-semibold">€340</span></p>
+
+    <!-- CTA -->
+    <form id="join" class="flex flex-col sm:flex-row gap-3 w-full max-w-md mx-auto mb-6" onsubmit="handleJoin(event)">
+      <input 
+        type="email" 
+        placeholder="your@email.com" 
+        required
+        class="flex-1 px-5 py-4 rounded-xl text-base"
+      />
+      <button type="submit" class="gradient-gold text-black font-black px-7 py-4 rounded-xl hover:opacity-90 transition whitespace-nowrap">
+        Get alerts free →
+      </button>
+    </form>
+    <p class="text-xs text-gray-600">Free forever · No credit card · Unsubscribe anytime</p>
+
+    <!-- Floating plane emoji -->
+    <div class="mt-16 float text-6xl select-none">🛋️</div>
+
+    <!-- Stats row -->
+    <div class="mt-16 grid grid-cols-3 gap-8 max-w-lg w-full">
+      <div>
+        <div class="text-3xl font-black gold">87%</div>
+        <div class="text-xs text-gray-500 mt-1">avg. savings<br/>vs. retail price</div>
+      </div>
+      <div class="border-x border-white/10">
+        <div class="text-3xl font-black gold">3–5</div>
+        <div class="text-xs text-gray-500 mt-1">deals per<br/>week</div>
+      </div>
+      <div>
+        <div class="text-3xl font-black gold">24h</div>
+        <div class="text-xs text-gray-500 mt-1">alert window<br/>before sold out</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" class="py-28 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-16">
+        <span class="text-xs font-bold tracking-widest text-yellow-500 uppercase">How it works</span>
+        <h2 class="text-4xl md:text-5xl font-black mt-3">Smarter than any travel agent</h2>
+        <p class="text-gray-400 mt-4 text-lg max-w-xl mx-auto">We monitor hundreds of sources 24/7 so you never miss a deal again.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="deal-card rounded-2xl p-8 card-glow">
+          <div class="w-12 h-12 gradient-gold rounded-xl flex items-center justify-center text-black text-xl font-black mb-6">1</div>
+          <h3 class="text-xl font-bold mb-3">We hunt error fares</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Airlines make pricing mistakes. We detect them in seconds — before they disappear. A €4,000 flight turning into €290 is real, and it happens weekly.</p>
+        </div>
+
+        <div class="deal-card rounded-2xl p-8 card-glow">
+          <div class="w-12 h-12 gradient-gold rounded-xl flex items-center justify-center text-black text-xl font-black mb-6">2</div>
+          <h3 class="text-xl font-bold mb-3">Points & miles hacks</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Turkish Miles&Smiles. Flying Blue. Avios. We tell you exactly which program to use and how to get the points — sometimes almost for free with the right credit card.</p>
+        </div>
+
+        <div class="deal-card rounded-2xl p-8 card-glow">
+          <div class="w-12 h-12 gradient-gold rounded-xl flex items-center justify-center text-black text-xl font-black mb-6">3</div>
+          <h3 class="text-xl font-bold mb-3">Upgrades & vouchers</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Last-minute upgrades, companion certificates, and bid auctions. We teach you to play the game airlines don't want you to know about.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAMPLE DEALS -->
+  <section id="deals" class="py-20 px-6 border-t border-white/5">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-12">
+        <span class="text-xs font-bold tracking-widest text-yellow-500 uppercase">Recent deals</span>
+        <h2 class="text-4xl md:text-5xl font-black mt-3">Real deals. Real savings.</h2>
+        <p class="text-gray-400 mt-4">These are the kinds of deals our members get. Premium subscribers get notified first.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-5">
+
+        <!-- Deal 1 -->
+        <div class="deal-card rounded-2xl p-6 card-glow">
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full">⚡ Error fare</span>
+                <span class="text-xs text-gray-600">48h ago</span>
+              </div>
+              <h3 class="text-lg font-bold">Madrid → New York</h3>
+              <p class="text-xs text-gray-500">Iberia Business · JFK nonstop</p>
+            </div>
+            <div class="text-right">
+              <div class="text-xs text-gray-600 line-through">€3,180</div>
+              <div class="text-2xl font-black text-green-400">€290</div>
+              <div class="text-xs text-yellow-500 font-semibold">91% off</div>
+            </div>
+          </div>
+          <div class="flex gap-4 text-xs text-gray-500">
+            <span>🗓️ Jun–Sep 2025</span>
+            <span>🕐 Lasted 3h</span>
+            <span>✅ Ticketed</span>
+          </div>
+        </div>
+
+        <!-- Deal 2 -->
+        <div class="deal-card rounded-2xl p-6 card-glow">
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full">🏆 Miles deal</span>
+                <span class="text-xs text-gray-600">3 days ago</span>
+              </div>
+              <h3 class="text-lg font-bold">Barcelona → Tokyo</h3>
+              <p class="text-xs text-gray-500">Turkish Airlines Business · IST connection</p>
+            </div>
+            <div class="text-right">
+              <div class="text-xs text-gray-600 line-through">€5,400</div>
+              <div class="text-2xl font-black text-green-400">45K pts</div>
+              <div class="text-xs text-yellow-500 font-semibold">≈€450 value</div>
+            </div>
+          </div>
+          <div class="flex gap-4 text-xs text-gray-500">
+            <span>🗓️ Oct–Nov 2025</span>
+            <span>🕐 48h window</span>
+            <span>✅ Available now</span>
+          </div>
+        </div>
+
+        <!-- Deal 3 -->
+        <div class="deal-card rounded-2xl p-6 card-glow">
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded-full">🔔 Flash sale</span>
+                <span class="text-xs text-gray-600">5 days ago</span>
+              </div>
+              <h3 class="text-lg font-bold">Madrid → Miami</h3>
+              <p class="text-xs text-gray-500">Air Europa Business · nonstop</p>
+            </div>
+            <div class="text-right">
+              <div class="text-xs text-gray-600 line-through">€2,100</div>
+              <div class="text-2xl font-black text-green-400">€480</div>
+              <div class="text-xs text-yellow-500 font-semibold">77% off</div>
+            </div>
+          </div>
+          <div class="flex gap-4 text-xs text-gray-500">
+            <span>🗓️ Feb–Apr 2026</span>
+            <span>🕐 Lasted 6h</span>
+            <span>✅ Ticketed</span>
+          </div>
+        </div>
+
+        <!-- Deal 4 -->
+        <div class="deal-card rounded-2xl p-6 card-glow">
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full">💳 Card hack</span>
+                <span class="text-xs text-gray-600">1 week ago</span>
+              </div>
+              <h3 class="text-lg font-bold">Madrid → Dubai</h3>
+              <p class="text-xs text-gray-500">Emirates Business · A380 upper deck</p>
+            </div>
+            <div class="text-right">
+              <div class="text-xs text-gray-600 line-through">€3,800</div>
+              <div class="text-2xl font-black text-green-400">60K pts</div>
+              <div class="text-xs text-yellow-500 font-semibold">≈€380 value</div>
+            </div>
+          </div>
+          <div class="flex gap-4 text-xs text-gray-500">
+            <span>🗓️ Any date</span>
+            <span>🕐 Open window</span>
+            <span>✅ Strategy guide</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-center text-xs text-gray-600 mt-6">⚠️ Deals are time-sensitive. Premium members get notified within minutes.</p>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="py-20 px-6 border-t border-white/5">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-black text-center mb-12">What early members say</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <div class="deal-card rounded-2xl p-6">
+          <div class="flex gap-1 mb-4">⭐⭐⭐⭐⭐</div>
+          <p class="text-gray-300 text-sm leading-relaxed mb-4">"I booked Madrid → Bangkok in business for €280. My colleague paid €3,400 for the same flight. I literally cried laughing."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full gradient-gold flex items-center justify-center text-black font-bold text-sm">AM</div>
+            <div>
+              <div class="text-sm font-semibold">Alejandro M.</div>
+              <div class="text-xs text-gray-600">Consultant, Madrid</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="deal-card rounded-2xl p-6">
+          <div class="flex gap-1 mb-4">⭐⭐⭐⭐⭐</div>
+          <p class="text-gray-300 text-sm leading-relaxed mb-4">"The points guide alone was worth it. Used Turkish miles for Emirates First Class. This stuff is real — you just need to know where to look."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full gradient-gold flex items-center justify-center text-black font-bold text-sm">SR</div>
+            <div>
+              <div class="text-sm font-semibold">Sara R.</div>
+              <div class="text-xs text-gray-600">Entrepreneur, Barcelona</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="deal-card rounded-2xl p-6">
+          <div class="flex gap-1 mb-4">⭐⭐⭐⭐⭐</div>
+          <p class="text-gray-300 text-sm leading-relaxed mb-4">"I travel 10 times a year for work. GetFlatbed saved me over €12,000 this year alone. My company still pays economy. I fly business."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full gradient-gold flex items-center justify-center text-black font-bold text-sm">JL</div>
+            <div>
+              <div class="text-sm font-semibold">Jorge L.</div>
+              <div class="text-xs text-gray-600">Sales Director, Valencia</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="py-28 px-6 border-t border-white/5">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-16">
+        <span class="text-xs font-bold tracking-widest text-yellow-500 uppercase">Pricing</span>
+        <h2 class="text-4xl md:text-5xl font-black mt-3">One deal pays for years</h2>
+        <p class="text-gray-400 mt-4">The average member saves €1,200 on their first booking.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+
+        <!-- Free -->
+        <div class="deal-card rounded-2xl p-8">
+          <h3 class="text-xl font-bold mb-1">Explorer</h3>
+          <p class="text-gray-500 text-sm mb-4">For casual travelers</p>
+          <div class="text-4xl font-black mb-6">Free <span class="text-lg font-normal text-gray-500">forever</span></div>
+          <ul class="space-y-3 text-sm text-gray-300 mb-8">
+            <li class="flex gap-2">✓ 2 deals per week (delayed 48h)</li>
+            <li class="flex gap-2">✓ Weekly newsletter</li>
+            <li class="flex gap-2">✓ Points basics guide</li>
+            <li class="flex gap-2 text-gray-600">✗ Real-time alerts</li>
+            <li class="flex gap-2 text-gray-600">✗ Error fare notifications</li>
+            <li class="flex gap-2 text-gray-600">✗ Telegram deal channel</li>
+          </ul>
+          <a href="#join" class="block text-center border border-white/20 text-white font-bold py-3.5 rounded-xl hover:bg-white/5 transition">
+            Join free
+          </a>
+        </div>
+
+        <!-- Premium -->
+        <div class="rounded-2xl p-8 border-2 border-yellow-500/60 glow" style="background: rgba(245,200,66,0.04)">
+          <div class="flex items-center gap-2 mb-1">
+            <h3 class="text-xl font-bold">Premium</h3>
+            <span class="text-xs font-bold gradient-gold text-black px-2 py-0.5 rounded-full">Most popular</span>
+          </div>
+          <p class="text-gray-400 text-sm mb-4">For serious deal hunters</p>
+          <div class="text-4xl font-black mb-1">€9 <span class="text-lg font-normal text-gray-500">/month</span></div>
+          <p class="text-xs text-gray-600 mb-6">or €79/year · Save 26%</p>
+          <ul class="space-y-3 text-sm text-gray-300 mb-8">
+            <li class="flex gap-2"><span class="gold">✓</span> All deals in real-time</li>
+            <li class="flex gap-2"><span class="gold">✓</span> Error fare instant alerts</li>
+            <li class="flex gap-2"><span class="gold">✓</span> Private Telegram channel</li>
+            <li class="flex gap-2"><span class="gold">✓</span> Full points & miles playbook</li>
+            <li class="flex gap-2"><span class="gold">✓</span> Upgrade & voucher strategies</li>
+            <li class="flex gap-2"><span class="gold">✓</span> Priority support</li>
+          </ul>
+          <a href="#join" class="block text-center gradient-gold text-black font-black py-3.5 rounded-xl hover:opacity-90 transition">
+            Start free trial →
+          </a>
+          <p class="text-xs text-center text-gray-600 mt-3">7-day free trial · Cancel anytime</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="py-28 px-6 border-t border-white/5 text-center">
+    <div class="max-w-2xl mx-auto">
+      <div class="text-5xl mb-6">✈️</div>
+      <h2 class="text-4xl md:text-5xl font-black mb-4">
+        Your next flight<br/><span class="gold">doesn't have to cost a fortune</span>
+      </h2>
+      <p class="text-gray-400 text-lg mb-10">Join hundreds of smart travelers who fly business for less than most people pay for economy.</p>
+
+      <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onsubmit="handleJoin(event)">
+        <input type="email" placeholder="your@email.com" required class="flex-1 px-5 py-4 rounded-xl text-base" />
+        <button type="submit" class="gradient-gold text-black font-black px-7 py-4 rounded-xl hover:opacity-90 transition">
+          Get alerts →
+        </button>
+      </form>
+      <p class="text-xs text-gray-600 mt-4">Free forever · Unsubscribe anytime · No spam, ever</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/5 py-10 px-6">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="text-lg">✈️</span>
+        <span class="font-black">Get<span class="gold">Flatbed</span></span>
+      </div>
+      <p class="text-xs text-gray-600">© 2026 GetFlatbed · Fly smart, fly business</p>
+      <div class="flex gap-6 text-xs text-gray-600">
+        <a href="#" class="hover:text-white transition">Privacy</a>
+        <a href="#" class="hover:text-white transition">Terms</a>
+        <a href="mailto:hello@getflatbed.com" class="hover:text-white transition">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Success modal -->
+  <div id="success-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center px-6" style="background: rgba(0,0,0,0.8)">
+    <div class="deal-card rounded-2xl p-10 text-center max-w-sm w-full">
+      <div class="text-5xl mb-4">🛋️</div>
+      <h3 class="text-2xl font-black mb-2">You're in!</h3>
+      <p class="text-gray-400 mb-6">Check your inbox — first deals coming this week. Welcome to the flatbed club.</p>
+      <button onclick="document.getElementById('success-modal').classList.add('hidden')" class="gradient-gold text-black font-bold px-6 py-3 rounded-xl w-full">
+        Close
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function handleJoin(e) {
+      e.preventDefault();
+      document.getElementById('success-modal').classList.remove('hidden');
+    }
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
