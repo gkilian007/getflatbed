@@ -80,12 +80,12 @@ export default function PricingPage() {
             Precios
           </span>
           <h1 className="text-5xl md:text-6xl font-black mt-4 mb-6 leading-tight">
-            Una oferta paga
+            El precio de un café al día,
             <br />
-            <span className="gold">10 años de membresía</span>
+            <span className="gold">un vuelo en business</span>
           </h1>
           <p className="text-xl text-gray-400 mb-10">
-            El miembro medio ahorra €1.400 en su primera reserva Premium. A
+            El primer deal que encuentres cubre de sobra el año entero. A
             €9/mes, la matemática es obvia.
           </p>
 
@@ -272,9 +272,9 @@ export default function PricingPage() {
             className="rounded-2xl p-10 border border-yellow-500/20 mb-16"
             style={{ background: "rgba(245,200,66,0.04)" }}
           >
-            <div className="text-5xl font-black gold mb-2">€1.400</div>
+            <div className="text-5xl font-black gold mb-2">€290 típico</div>
             <p className="text-gray-400">
-              Ahorro medio en la primera reserva Premium
+              Precio típico de un error fare MAD→JFK en business
             </p>
             <p className="text-xs text-gray-600 mt-2">
               Basado en ahorros reportados por miembros, enero–marzo 2026
