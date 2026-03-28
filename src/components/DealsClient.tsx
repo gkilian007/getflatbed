@@ -16,6 +16,7 @@ interface Deal {
   is_premium_only: boolean;
   status: string;
   created_at: string;
+  affiliate_url: string | null;
 }
 
 interface DealsClientProps {
@@ -288,9 +289,30 @@ export default function DealsClient({
                             </div>
                           </div>
                           {deal.dates_available && (
-                            <div className="text-xs text-gray-500 mt-3">
+                            <div className="text-xs text-gray-500 mt-3 mb-4">
                               📅 {deal.dates_available}
                             </div>
+                          )}
+
+                          {/* CTA Button */}
+                          {deal.affiliate_url ? (
+                            <a
+                              href={deal.affiliate_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block w-full text-center gradient-gold text-black font-bold py-3 rounded-xl hover:opacity-90 transition text-sm mt-3"
+                            >
+                              Reservar esta oferta →
+                            </a>
+                          ) : (
+                            <a
+                              href={`https://www.google.com/travel/flights?q=${encodeURIComponent(deal.origin + ' to ' + deal.destination + ' business class')}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block w-full text-center border border-white/20 text-white font-bold py-3 rounded-xl hover:bg-white/5 transition text-sm mt-3"
+                            >
+                              Buscar vuelos →
+                            </a>
                           )}
                         </div>
 
