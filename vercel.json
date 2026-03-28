@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/scrape-deals?key=getflatbed-admin-2026",
+      "schedule": "*/30 * * * *"
+    }
+  ]
+}
