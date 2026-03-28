@@ -1,0 +1,320 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+
+interface Deal {
+  id: string;
+  type: string;
+  origin: string;
+  destination: string;
+  airline: string;
+  price_original: number | null;
+  price_deal: number | null;
+  savings_pct: number | null;
+  dates_available: string | null;
+  is_premium_only: boolean;
+  status: string;
+  created_at: string;
+}
+
+interface DealsClientProps {
+  deals: Deal[];
+  isLoggedIn: boolean;
+  isPremium: boolean;
+}
+
+const dealTypeLabels: Record<string, string> = {
+  error_fare: "⚡ Error fare",
+  miles: "🏆 Miles deal",
+  flash_sale: "🔔 Flash sale",
+  voucher: "💳 Voucher",
+};
+
+const dealTypeColors: Record<string, string> = {
+  error_fare: "text-red-400 bg-red-400/10 border-red-400/20",
+  miles: "text-blue-400 bg-blue-400/10 border-blue-400/20",
+  flash_sale: "text-purple-400 bg-purple-400/10 border-purple-400/20",
+  voucher: "text-green-400 bg-green-400/10 border-green-400/20",
+};
+
+const filterTypeOptions = ["All", "Error fare", "Miles deal", "Flash sale"];
+const filterOrigins = ["All", "MAD", "BCN", "BOG", "MEX", "EZE", "MIA"];
+const savingsOptions = ["Any", "50%+", "70%+", "80%+", "90%+"];
+
+function getDealTypeFilter(deal: Deal, filter: string) {
+  if (filter === "All") return true;
+  const map: Record<string, string> = {
+    "Error fare": "error_fare",
+    "Miles deal": "miles",
+    "Flash sale": "flash_sale",
+  };
+  return deal.type === map[filter];
+}
+
+function getSavingsFilter(deal: Deal, filter: string) {
+  if (filter === "Any") return true;
+  const pct = deal.savings_pct || 0;
+  const threshold = parseInt(filter);
+  return pct >= threshold;
+}
+
+export default function DealsClient({ deals, isLoggedIn, isPremium }: DealsClientProps) {
+  const [filterType, setFilterType] = useState("All");
+  const [filterOrigin, setFilterOrigin] = useState("All");
+  const [minSavings, setMinSavings] = useState("Any");
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginSubmitted, setLoginSubmitted] = useState(false);
+
+  const handleLoginSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoginSubmitted(true);
+    setLoginEmail("");
+  };
+
+  const filtered = deals.filter((d) => {
+    if (!getDealTypeFilter(d, filterType)) return false;
+    if (filterOrigin !== "All" && d.origin !== filterOrigin) return false;
+    if (!getSavingsFilter(d, minSavings)) return false;
+    return true;
+  });
+
+  // Visible: show all deals to everyone (but blur premium-only for non-premium)
+  // Lock wall: show only if not logged in (for last half)
+  const showLoginWall = !isLoggedIn && filtered.length > 3;
+  const visibleDeals = showLoginWall ? filtered.slice(0, 3) : filtered;
+  const hiddenDeals = showLoginWall ? filtered.slice(3) : [];
+
+  return (
+    <div className="pt-20">
+      <div className="max-w-6xl mx-auto px-6 py-10">
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* SIDEBAR */}
+          <aside className="lg:w-64 flex-shrink-0">
+            <div className="deal-card rounded-2xl p-6 sticky top-24">
+              <h3 className="font-bold text-sm mb-6">Filter deals</h3>
+
+              <div className="mb-6">
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-wide block mb-3">
+                  Deal type
+                </label>
+                <div className="space-y-2">
+                  {filterTypeOptions.map((t) => (
+                    <button
+                      key={t}
+                      onClick={() => setFilterType(t)}
+                      className={`block w-full text-left text-sm px-3 py-2 rounded-lg transition ${
+                        filterType === t
+                          ? "gradient-gold text-black font-bold"
+                          : "text-gray-400 hover:text-white hover:bg-white/5"
+                      }`}
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mb-6">
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-wide block mb-3">
+                  Origin
+                </label>
+                <select
+                  value={filterOrigin}
+                  onChange={(e) => setFilterOrigin(e.target.value)}
+                  className="w-full text-sm px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-gray-300"
+                >
+                  {filterOrigins.map((o) => (
+                    <option key={o} value={o}>
+                      {o}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-wide block mb-3">
+                  Minimum savings
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  {savingsOptions.map((s) => (
+                    <button
+                      key={s}
+                      onClick={() => setMinSavings(s)}
+                      className={`text-xs px-3 py-2 rounded-lg transition ${
+                        minSavings === s
+                          ? "gradient-gold text-black font-bold"
+                          : "bg-white/5 text-gray-400 hover:bg-white/10"
+                      }`}
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          {/* MAIN CONTENT */}
+          <main className="flex-1 min-w-0">
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+              <div>
+                <h1 className="text-3xl font-black">Current Deals</h1>
+                <p className="text-gray-500 text-sm mt-1">
+                  {filtered.length} active deals
+                </p>
+              </div>
+              <div className="flex items-center gap-2 text-xs bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 px-4 py-2 rounded-full">
+                <span className="w-2 h-2 rounded-full bg-yellow-400 pulse" />
+                Live data
+              </div>
+            </div>
+
+            {filtered.length === 0 ? (
+              <div className="deal-card rounded-xl p-12 text-center text-gray-500">
+                <div className="text-4xl mb-3">✈️</div>
+                <p>No deals match your filters. Try adjusting them.</p>
+              </div>
+            ) : (
+              <>
+                {/* Visible deals */}
+                <div className="grid md:grid-cols-2 gap-5 mb-5">
+                  {visibleDeals.map((deal) => {
+                    const needsUpgrade = deal.is_premium_only && !isPremium && isLoggedIn;
+                    return (
+                      <div key={deal.id} className="deal-card rounded-2xl p-5 relative">
+                        <div className={needsUpgrade ? "blur-sm select-none" : ""}>
+                          <div className="flex items-center gap-2 mb-3">
+                            <span
+                              className={`text-xs font-bold px-2 py-0.5 rounded-full border ${
+                                dealTypeColors[deal.type] || "text-gray-400 bg-white/5 border-white/10"
+                              }`}
+                            >
+                              {dealTypeLabels[deal.type] || deal.type}
+                            </span>
+                            {deal.is_premium_only && (
+                              <span className="text-xs gradient-gold text-black font-bold px-2 py-0.5 rounded-full">
+                                Premium
+                              </span>
+                            )}
+                          </div>
+                          <div className="flex justify-between items-start gap-4">
+                            <div>
+                              <div className="text-xl font-black">
+                                {deal.origin} → {deal.destination}
+                              </div>
+                              <div className="text-gray-400 text-sm">{deal.airline}</div>
+                            </div>
+                            <div className="text-right flex-shrink-0">
+                              {deal.price_original && (
+                                <div className="text-gray-500 text-xs line-through">
+                                  €{Number(deal.price_original).toLocaleString()}
+                                </div>
+                              )}
+                              <div className="text-xl font-black">
+                                {deal.type === "miles"
+                                  ? `${Number(deal.price_deal).toLocaleString()}pts`
+                                  : `€${Number(deal.price_deal).toLocaleString()}`}
+                              </div>
+                              {deal.savings_pct && (
+                                <div className="text-green-400 text-sm font-bold">
+                                  {deal.savings_pct}% off
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          {deal.dates_available && (
+                            <div className="text-xs text-gray-500 mt-3">
+                              📅 {deal.dates_available}
+                            </div>
+                          )}
+                        </div>
+
+                        {needsUpgrade && (
+                          <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-black/50">
+                            <div className="text-center px-4">
+                              <div className="text-2xl mb-2">🔒</div>
+                              <p className="text-xs text-gray-300 mb-3">Premium deal</p>
+                              <Link
+                                href="/pricing"
+                                className="text-xs gradient-gold text-black font-bold px-4 py-2 rounded-full"
+                              >
+                                Upgrade to unlock
+                              </Link>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Login wall for non-logged-in users */}
+                {showLoginWall && hiddenDeals.length > 0 && (
+                  <div className="relative">
+                    <div className="grid md:grid-cols-2 gap-5 opacity-40 pointer-events-none select-none">
+                      {hiddenDeals.map((deal) => (
+                        <div key={deal.id} className="deal-card rounded-2xl p-5">
+                          <div className="text-lg font-black">{deal.origin} → {deal.destination}</div>
+                          <div className="text-gray-400 text-sm">{deal.airline}</div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div
+                      className="absolute inset-0 flex items-center justify-center rounded-2xl"
+                      style={{ background: "rgba(10,10,15,0.85)" }}
+                    >
+                      <div className="text-center max-w-sm px-6">
+                        <div className="text-5xl mb-4">🔒</div>
+                        <h3 className="text-2xl font-black mb-2">
+                          Unlock all {deals.length} deals
+                        </h3>
+                        <p className="text-gray-400 text-sm mb-6">
+                          Join free to see all current deals. Premium members get instant alerts.
+                        </p>
+                        {loginSubmitted ? (
+                          <p className="text-green-400 font-bold">
+                            You&apos;re in! Check your inbox.
+                          </p>
+                        ) : (
+                          <>
+                            <form onSubmit={handleLoginSubmit} className="flex flex-col gap-3 mb-4">
+                              <input
+                                type="email"
+                                placeholder="your@email.com"
+                                required
+                                value={loginEmail}
+                                onChange={(e) => setLoginEmail(e.target.value)}
+                                className="px-4 py-3 rounded-xl text-sm w-full"
+                              />
+                              <button
+                                type="submit"
+                                className="gradient-gold text-black font-bold px-6 py-3 rounded-xl hover:opacity-90 transition"
+                              >
+                                Join free — Unlock all deals
+                              </button>
+                            </form>
+                            <p className="text-xs text-gray-600">
+                              Already a member?{" "}
+                              <Link
+                                href="/login"
+                                className="text-yellow-500 hover:text-yellow-400"
+                              >
+                                Log in
+                              </Link>
+                            </p>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+          </main>
+        </div>
+      </div>
+    </div>
+  );
+}

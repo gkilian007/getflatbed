@@ -2,24 +2,23 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 
 type Step = 1 | 2 | 3;
 
 const airports = ["MAD", "BCN", "BOG", "MEX", "EZE", "MIA", "LIS"];
-const destinations = [
-  "NYC",
-  "Tokyo",
-  "Dubai",
-  "Singapore",
-  "Bangkok",
-  "London",
-  "Paris",
-];
+const destinations = ["NYC", "Tokyo", "Dubai", "Singapore", "Bangkok", "London", "Paris"];
 const dealTypes = ["Error fares", "Miles deals", "Flash sales", "Upgrades"];
 const expertiseLevels = ["Beginner", "Intermediate", "Expert"];
 
+const MONTHLY_PRICE_ID = process.env.NEXT_PUBLIC_STRIPE_MONTHLY_PRICE_ID || "price_1TFqrXGi2m9cbdSO9ETjNyvd";
+
 export default function RegisterPage() {
+  const router = useRouter();
   const [step, setStep] = useState<Step>(1);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   // Step 1
   const [email, setEmail] = useState("");
@@ -33,18 +32,17 @@ export default function RegisterPage() {
   const [selectedDealTypes, setSelectedDealTypes] = useState<string[]>([]);
   const [expertise, setExpertise] = useState("Beginner");
 
-  const toggleItem = (
-    list: string[],
-    setList: (v: string[]) => void,
-    item: string
-  ) => {
-    setList(
-      list.includes(item) ? list.filter((i) => i !== item) : [...list, item]
-    );
+  const supabase = createClient();
+
+  const toggleItem = (list: string[], setList: (v: string[]) => void, item: string) => {
+    setList(list.includes(item) ? list.filter((i) => i !== item) : [...list, item]);
   };
 
-  const handleStep1 = (e: React.FormEvent) => {
+  const handleStep1 = async (e: React.FormEvent) => {
     e.preventDefault();
+    setPasswordError("");
+    setError("");
+
     if (password !== confirmPassword) {
       setPasswordError("Passwords don't match");
       return;
@@ -53,8 +51,83 @@ export default function RegisterPage() {
       setPasswordError("Password must be at least 8 characters");
       return;
     }
-    setPasswordError("");
-    setStep(2);
+
+    setLoading(true);
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { emailRedirectTo: `${window.location.origin}/dashboard` },
+    });
+
+    setLoading(false);
+    if (error) {
+      setError(error.message);
+    } else {
+      setStep(2);
+    }
+  };
+
+  const handleStep2 = async () => {
+    setLoading(true);
+    setError("");
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      await supabase.from("profiles").update({
+        origin_airports: selectedAirports,
+        dest_preferences: selectedDests,
+        miles_level: expertise.toLowerCase() as "beginner" | "intermediate" | "expert",
+        updated_at: new Date().toISOString(),
+      }).eq("id", user.id);
+    }
+
+    setLoading(false);
+    setStep(3);
+  };
+
+  const handleGoogleSignup = async () => {
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: `${window.location.origin}/dashboard` },
+    });
+    if (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  };
+
+  const handleFreeplan = () => {
+    router.push("/dashboard");
+  };
+
+  const handlePremium = async () => {
+    setLoading(true);
+    setError("");
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      router.push("/login");
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/stripe/create-checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ priceId: MONTHLY_PRICE_ID }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        setError(data.error || "Failed to start checkout");
+        setLoading(false);
+      }
+    } catch {
+      setError("Failed to start checkout");
+      setLoading(false);
+    }
   };
 
   return (
@@ -86,28 +159,29 @@ export default function RegisterPage() {
                 {s < step ? "✓" : s}
               </div>
               {s < 3 && (
-                <div
-                  className={`w-8 h-0.5 ${
-                    s < step ? "bg-green-500/40" : "bg-white/10"
-                  }`}
-                />
+                <div className={`w-8 h-0.5 ${s < step ? "bg-green-500/40" : "bg-white/10"}`} />
               )}
             </div>
           ))}
         </div>
 
+        {error && (
+          <div className="bg-red-500/10 border border-red-500/30 text-red-400 text-sm rounded-xl px-4 py-3 mb-6">
+            {error}
+          </div>
+        )}
+
         {/* STEP 1 */}
         {step === 1 && (
           <div className="deal-card rounded-2xl p-8">
             <h1 className="text-2xl font-black mb-1">Create your account</h1>
-            <p className="text-gray-500 text-sm mb-6">
-              Free forever. No credit card required.
-            </p>
+            <p className="text-gray-500 text-sm mb-6">Free forever. No credit card required.</p>
 
-            {/* Google SSO */}
             <button
               type="button"
-              className="w-full flex items-center justify-center gap-3 border border-white/20 text-white font-semibold py-3.5 rounded-xl hover:bg-white/5 transition mb-6 text-sm"
+              onClick={handleGoogleSignup}
+              disabled={loading}
+              className="w-full flex items-center justify-center gap-3 border border-white/20 text-white font-semibold py-3.5 rounded-xl hover:bg-white/5 transition mb-6 text-sm disabled:opacity-60"
             >
               <span className="text-xl">G</span>
               Continue with Google
@@ -115,9 +189,7 @@ export default function RegisterPage() {
 
             <div className="flex items-center gap-4 mb-6">
               <div className="flex-1 h-px bg-white/10" />
-              <span className="text-xs text-gray-600">
-                or continue with email
-              </span>
+              <span className="text-xs text-gray-600">or continue with email</span>
               <div className="flex-1 h-px bg-white/10" />
             </div>
 
@@ -166,18 +238,16 @@ export default function RegisterPage() {
               </div>
               <button
                 type="submit"
-                className="w-full gradient-gold text-black font-black py-4 rounded-xl hover:opacity-90 transition mt-2"
+                disabled={loading}
+                className="w-full gradient-gold text-black font-black py-4 rounded-xl hover:opacity-90 transition mt-2 disabled:opacity-60"
               >
-                Next →
+                {loading ? "Creating account..." : "Next →"}
               </button>
             </form>
 
             <p className="text-center text-sm text-gray-500 mt-6">
               Already have an account?{" "}
-              <Link
-                href="/login"
-                className="text-yellow-500 hover:text-yellow-400 font-semibold"
-              >
+              <Link href="/login" className="text-yellow-500 hover:text-yellow-400 font-semibold">
                 Sign in
               </Link>
             </p>
@@ -188,11 +258,8 @@ export default function RegisterPage() {
         {step === 2 && (
           <div className="deal-card rounded-2xl p-8">
             <h2 className="text-2xl font-black mb-1">Your preferences</h2>
-            <p className="text-gray-500 text-sm mb-8">
-              Help us find the right deals for you
-            </p>
+            <p className="text-gray-500 text-sm mb-8">Help us find the right deals for you</p>
 
-            {/* Home airports */}
             <div className="mb-6">
               <label className="text-xs font-bold text-gray-500 uppercase tracking-wide block mb-3">
                 Home airports
@@ -202,9 +269,7 @@ export default function RegisterPage() {
                   <button
                     key={ap}
                     type="button"
-                    onClick={() =>
-                      toggleItem(selectedAirports, setSelectedAirports, ap)
-                    }
+                    onClick={() => toggleItem(selectedAirports, setSelectedAirports, ap)}
                     className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${
                       selectedAirports.includes(ap)
                         ? "gradient-gold text-black"
@@ -217,7 +282,6 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            {/* Dream destinations */}
             <div className="mb-6">
               <label className="text-xs font-bold text-gray-500 uppercase tracking-wide block mb-3">
                 Dream destinations
@@ -227,9 +291,7 @@ export default function RegisterPage() {
                   <button
                     key={d}
                     type="button"
-                    onClick={() =>
-                      toggleItem(selectedDests, setSelectedDests, d)
-                    }
+                    onClick={() => toggleItem(selectedDests, setSelectedDests, d)}
                     className={`px-3 py-1.5 rounded-full text-xs font-bold transition ${
                       selectedDests.includes(d)
                         ? "gradient-gold text-black"
@@ -242,23 +304,17 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            {/* Deal types */}
             <div className="mb-6">
               <label className="text-xs font-bold text-gray-500 uppercase tracking-wide block mb-3">
                 Deal types
               </label>
               <div className="space-y-2">
                 {dealTypes.map((dt) => (
-                  <label
-                    key={dt}
-                    className="flex items-center gap-3 cursor-pointer"
-                  >
+                  <label key={dt} className="flex items-center gap-3 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={selectedDealTypes.includes(dt)}
-                      onChange={() =>
-                        toggleItem(selectedDealTypes, setSelectedDealTypes, dt)
-                      }
+                      onChange={() => toggleItem(selectedDealTypes, setSelectedDealTypes, dt)}
                       className="w-4 h-4 accent-yellow-400"
                     />
                     <span className="text-sm text-gray-300">{dt}</span>
@@ -267,7 +323,6 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            {/* Miles expertise */}
             <div className="mb-8">
               <label className="text-xs font-bold text-gray-500 uppercase tracking-wide block mb-3">
                 Miles & points expertise
@@ -300,10 +355,11 @@ export default function RegisterPage() {
               </button>
               <button
                 type="button"
-                onClick={() => setStep(3)}
-                className="flex-1 gradient-gold text-black font-black py-4 rounded-xl hover:opacity-90 transition"
+                onClick={handleStep2}
+                disabled={loading}
+                className="flex-1 gradient-gold text-black font-black py-4 rounded-xl hover:opacity-90 transition disabled:opacity-60"
               >
-                Next →
+                {loading ? "Saving..." : "Next →"}
               </button>
             </div>
           </div>
@@ -313,9 +369,7 @@ export default function RegisterPage() {
         {step === 3 && (
           <div className="deal-card rounded-2xl p-8">
             <h2 className="text-2xl font-black mb-1">Choose your plan</h2>
-            <p className="text-gray-500 text-sm mb-8">
-              Start free, upgrade anytime
-            </p>
+            <p className="text-gray-500 text-sm mb-8">Start free, upgrade anytime</p>
 
             <div className="space-y-4 mb-8">
               {/* Explorer */}
@@ -332,12 +386,12 @@ export default function RegisterPage() {
                   <li>✓ Weekly newsletter</li>
                   <li>✓ Basic guides</li>
                 </ul>
-                <Link
-                  href="/dashboard"
-                  className="block text-center border border-white/20 text-white font-bold py-3 rounded-xl hover:bg-white/5 transition text-sm"
+                <button
+                  onClick={handleFreeplan}
+                  className="block w-full text-center border border-white/20 text-white font-bold py-3 rounded-xl hover:bg-white/5 transition text-sm"
                 >
                   Start with Explorer
-                </Link>
+                </button>
               </div>
 
               {/* Premium */}
@@ -353,9 +407,7 @@ export default function RegisterPage() {
                 <div className="flex justify-between items-start mb-3">
                   <div>
                     <h3 className="font-bold">Premium</h3>
-                    <p className="text-xs text-gray-400">
-                      For serious deal hunters
-                    </p>
+                    <p className="text-xs text-gray-400">For serious deal hunters</p>
                   </div>
                   <div className="text-right">
                     <div className="text-xl font-black">€9</div>
@@ -363,27 +415,20 @@ export default function RegisterPage() {
                   </div>
                 </div>
                 <ul className="space-y-1.5 text-xs text-gray-300 mb-4">
-                  <li>
-                    <span className="gold">✓</span> All deals in real-time
-                  </li>
-                  <li>
-                    <span className="gold">✓</span> Instant Telegram alerts
-                  </li>
-                  <li>
-                    <span className="gold">✓</span> Error fare notifications
-                  </li>
-                  <li>
-                    <span className="gold">✓</span> Full playbooks & guides
-                  </li>
+                  <li><span className="gold">✓</span> All deals in real-time</li>
+                  <li><span className="gold">✓</span> Instant Telegram alerts</li>
+                  <li><span className="gold">✓</span> Error fare notifications</li>
+                  <li><span className="gold">✓</span> Full playbooks & guides</li>
                 </ul>
-                <Link
-                  href="/dashboard"
-                  className="block text-center gradient-gold text-black font-black py-3 rounded-xl hover:opacity-90 transition text-sm"
+                <button
+                  onClick={handlePremium}
+                  disabled={loading}
+                  className="block w-full text-center gradient-gold text-black font-black py-3 rounded-xl hover:opacity-90 transition text-sm disabled:opacity-60"
                 >
-                  Start free trial →
-                </Link>
+                  {loading ? "Redirecting..." : "Start free trial →"}
+                </button>
                 <p className="text-xs text-center text-gray-600 mt-2">
-                  7-day free trial · No credit card
+                  7-day free trial · Cancel anytime
                 </p>
               </div>
             </div>
