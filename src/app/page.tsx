@@ -8,11 +8,31 @@ export default function HomePage() {
   const [heroEmail, setHeroEmail] = useState("");
   const [ctaEmail, setCtaEmail] = useState("");
   const [showModal, setShowModal] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent, setter: (v: string) => void) => {
+  const handleSubmit = async (e: React.FormEvent, email: string, setter: (v: string) => void) => {
     e.preventDefault();
-    setter("");
-    setShowModal(true);
+    if (!email) return;
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Error');
+      setter("");
+      setShowModal(true);
+    } catch {
+      setError("Algo salió mal. Inténtalo de nuevo.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const sampleDeals = [
@@ -113,7 +133,7 @@ export default function HomePage() {
 
         {/* CTA form */}
         <form
-          onSubmit={(e) => handleSubmit(e, setHeroEmail)}
+          onSubmit={(e) => handleSubmit(e, heroEmail, setHeroEmail)}
           className="flex flex-col sm:flex-row gap-3 w-full max-w-md mx-auto mb-6"
         >
           <input
@@ -489,7 +509,7 @@ export default function HomePage() {
           </p>
 
           <form
-            onSubmit={(e) => handleSubmit(e, setCtaEmail)}
+            onSubmit={(e) => handleSubmit(e, ctaEmail, setCtaEmail)}
             className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
           >
             <input
