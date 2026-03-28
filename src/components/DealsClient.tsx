@@ -305,14 +305,19 @@ export default function DealsClient({
                               Reservar esta oferta →
                             </a>
                           ) : (
-                            <a
-                              href={`https://www.google.com/travel/flights?q=${encodeURIComponent(deal.origin + ' to ' + deal.destination + ' business class')}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="block w-full text-center border border-white/20 text-white font-bold py-3 rounded-xl hover:bg-white/5 transition text-sm mt-3"
-                            >
-                              Buscar vuelos →
-                            </a>
+                            <div className="mt-3 p-3 rounded-xl text-sm" style={{ background: "rgba(245,200,66,0.08)", border: "1px solid rgba(245,200,66,0.2)" }}>
+                              <p className="text-yellow-400 font-bold text-xs mb-1">📋 Cómo reservar:</p>
+                              <p className="text-gray-300 text-xs">
+                                {deal.type === "miles"
+                                  ? `Canjea ${Number(deal.price_deal).toLocaleString()} millas en el programa de ${deal.airline}. Busca disponibilidad para ${deal.dates_available || "fechas flexibles"}.`
+                                  : deal.type === "error_fare"
+                                  ? `Busca directamente en ${deal.airline}.com el vuelo ${deal.origin}→${deal.destination} para ${deal.dates_available || "fechas flexibles"}. Las tarifas error caducan en horas — reserva sin demora.`
+                                  : deal.type === "flash_sale"
+                                  ? `Ve a ${deal.airline}.com y busca ${deal.origin}→${deal.destination} en Business para ${deal.dates_available || "las fechas disponibles"}. Promoción por tiempo limitado.`
+                                  : `Consulta el programa de ${deal.airline} para esta ruta.`
+                                }
+                              </p>
+                            </div>
                           )}
                         </div>
 

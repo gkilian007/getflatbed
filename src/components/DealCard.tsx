@@ -111,14 +111,12 @@ export default function DealCard({
             Reservar esta oferta →
           </a>
         ) : (
-          <a
-            href={`https://www.google.com/travel/flights?q=${encodeURIComponent(from + ' to ' + to + ' business class')}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block w-full text-center border border-white/20 text-white font-bold py-3 rounded-xl hover:bg-white/5 transition text-sm"
-          >
-            Buscar vuelos →
-          </a>
+          <div className="p-3 rounded-xl text-sm" style={{ background: "rgba(245,200,66,0.08)", border: "1px solid rgba(245,200,66,0.2)" }}>
+            <p className="text-yellow-400 font-bold text-xs mb-1">📋 Cómo reservar:</p>
+            <p className="text-gray-300 text-xs">
+              Busca directamente en la web de {airline.split(" ·")[0]} el vuelo {from}→{to} en Business para {dates}. Actúa rápido — estas ofertas caducan.
+            </p>
+          </div>
         )}
       </div>
 
