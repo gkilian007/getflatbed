@@ -14,6 +14,8 @@ export interface DealCardProps {
   status: string;
   isLocked?: boolean;
   timestamp: string;
+  affiliateUrl?: string;
+  forYou?: boolean;
 }
 
 function getBadgeStyle(type: DealCardProps["type"]) {
@@ -45,6 +47,8 @@ export default function DealCard({
   status,
   isLocked = false,
   timestamp,
+  affiliateUrl,
+  forYou = false,
 }: DealCardProps) {
   return (
     <div className="deal-card rounded-2xl p-6 card-glow relative overflow-hidden">
@@ -90,12 +94,40 @@ export default function DealCard({
         </div>
 
         {/* Footer row */}
-        <div className="flex flex-wrap gap-4 text-xs text-gray-500">
+        <div className="flex flex-wrap gap-4 text-xs text-gray-500 mb-4">
           <span>🗓️ {dates}</span>
           <span>🕐 {duration}</span>
           <span>{status}</span>
         </div>
+
+        {/* CTA */}
+        {affiliateUrl ? (
+          <a
+            href={affiliateUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full text-center gradient-gold text-black font-bold py-3 rounded-xl hover:opacity-90 transition text-sm"
+          >
+            Reservar esta oferta →
+          </a>
+        ) : (
+          <a
+            href={`https://www.google.com/travel/flights?q=${encodeURIComponent(from + ' to ' + to + ' business class')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full text-center border border-white/20 text-white font-bold py-3 rounded-xl hover:bg-white/5 transition text-sm"
+          >
+            Buscar vuelos →
+          </a>
+        )}
       </div>
+
+      {/* For You badge */}
+      {forYou && (
+        <div className="absolute top-4 right-4 z-5 gradient-gold text-black text-xs font-bold px-2 py-1 rounded-full">
+          Para ti
+        </div>
+      )}
     </div>
   );
 }
