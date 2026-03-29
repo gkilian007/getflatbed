@@ -263,62 +263,66 @@ export default function DealsClient({
                               </span>
                             )}
                           </div>
-                          <div className="flex justify-between items-start gap-4">
-                            <div>
-                              <div className="text-xl font-black">
-                                {deal.origin} → {deal.destination}
-                              </div>
-                              <div className="text-gray-400 text-sm">{deal.airline}</div>
-                            </div>
-                            <div className="text-right flex-shrink-0">
-                              {deal.price_original && (
-                                <div className="text-gray-500 text-xs line-through">
-                                  €{Number(deal.price_original).toLocaleString()}
+                          <Link href={`/deals/${deal.id}`} className="block hover:opacity-80 transition">
+                            <div className="flex justify-between items-start gap-4">
+                              <div>
+                                <div className="text-xl font-black">
+                                  {deal.origin} → {deal.destination}
                                 </div>
-                              )}
-                              <div className="text-xl font-black">
-                                {deal.type === "miles"
-                                  ? `${Number(deal.price_deal).toLocaleString()}pts`
-                                  : `€${Number(deal.price_deal).toLocaleString()}`}
+                                <div className="text-gray-400 text-sm">{deal.airline}</div>
                               </div>
-                              {deal.savings_pct && (
-                                <div className="text-green-400 text-sm font-bold">
-                                  {deal.savings_pct}% dto.
+                              <div className="text-right flex-shrink-0">
+                                {deal.price_original && (
+                                  <div className="text-gray-500 text-xs line-through">
+                                    €{Number(deal.price_original).toLocaleString()}
+                                  </div>
+                                )}
+                                <div className="text-xl font-black">
+                                  {deal.type === "miles"
+                                    ? `${Number(deal.price_deal).toLocaleString()}pts`
+                                    : `€${Number(deal.price_deal).toLocaleString()}`}
                                 </div>
-                              )}
+                                {deal.savings_pct && (
+                                  <div className="text-green-400 text-sm font-bold">
+                                    {deal.savings_pct}% dto.
+                                  </div>
+                                )}
+                              </div>
                             </div>
-                          </div>
-                          {deal.dates_available && (
-                            <div className="text-xs text-gray-500 mt-3 mb-4">
-                              📅 {deal.dates_available}
-                            </div>
-                          )}
+                            {deal.dates_available && (
+                              <div className="text-xs text-gray-500 mt-3">
+                                📅 {deal.dates_available}
+                              </div>
+                            )}
+                          </Link>
 
-                          {/* CTA Button */}
-                          {deal.affiliate_url ? (
-                            <a
-                              href={deal.affiliate_url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="block w-full text-center gradient-gold text-black font-bold py-3 rounded-xl hover:opacity-90 transition text-sm mt-3"
+                          {/* CTA Buttons */}
+                          <div className="mt-4 flex gap-2">
+                            {deal.affiliate_url ? (
+                              <a
+                                href={deal.affiliate_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex-1 text-center gradient-gold text-black font-bold py-3 rounded-xl hover:opacity-90 transition text-sm"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                Reservar →
+                              </a>
+                            ) : (
+                              <Link
+                                href={`/deals/${deal.id}`}
+                                className="flex-1 text-center gradient-gold text-black font-bold py-3 rounded-xl hover:opacity-90 transition text-sm"
+                              >
+                                Cómo reservar →
+                              </Link>
+                            )}
+                            <Link
+                              href={`/deals/${deal.id}`}
+                              className="px-4 py-3 rounded-xl text-sm font-semibold text-gray-400 hover:text-gray-200 bg-white/5 hover:bg-white/10 transition"
                             >
-                              Reservar esta oferta →
-                            </a>
-                          ) : (
-                            <div className="mt-3 p-3 rounded-xl text-sm" style={{ background: "rgba(245,200,66,0.08)", border: "1px solid rgba(245,200,66,0.2)" }}>
-                              <p className="text-yellow-400 font-bold text-xs mb-1">📋 Cómo reservar:</p>
-                              <p className="text-gray-300 text-xs">
-                                {deal.type === "miles"
-                                  ? `Canjea ${Number(deal.price_deal).toLocaleString()} millas en el programa de ${deal.airline}. Busca disponibilidad para ${deal.dates_available || "fechas flexibles"}.`
-                                  : deal.type === "error_fare"
-                                  ? `Busca directamente en ${deal.airline}.com el vuelo ${deal.origin}→${deal.destination} para ${deal.dates_available || "fechas flexibles"}. Las tarifas error caducan en horas — reserva sin demora.`
-                                  : deal.type === "flash_sale"
-                                  ? `Ve a ${deal.airline}.com y busca ${deal.origin}→${deal.destination} en Business para ${deal.dates_available || "las fechas disponibles"}. Promoción por tiempo limitado.`
-                                  : `Consulta el programa de ${deal.airline} para esta ruta.`
-                                }
-                              </p>
-                            </div>
-                          )}
+                              Ver detalles
+                            </Link>
+                          </div>
                         </div>
 
                         {needsUpgrade && (

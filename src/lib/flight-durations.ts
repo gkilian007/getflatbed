@@ -1,0 +1,63 @@
+// Typical flight durations for business class routes (one-way)
+export const FLIGHT_DURATIONS: Record<string, string> = {
+  "MAD-JFK": "8h 30min",
+  "MAD-EWR": "8h 30min",
+  "MAD-MIA": "9h 45min",
+  "MAD-GRU": "10h 15min",
+  "MAD-BOG": "10h 30min",
+  "MAD-LIM": "12h",
+  "MAD-EZE": "13h",
+  "MAD-SCL": "13h 30min",
+  "MAD-MEX": "11h 30min",
+  "MAD-DXB": "7h 15min",
+  "MAD-BKK": "11h 30min",
+  "MAD-SIN": "13h",
+  "MAD-NRT": "14h",
+  "MAD-HKG": "13h 30min",
+  "MAD-LHR": "2h 30min",
+  "MAD-CDG": "2h",
+  "MAD-FRA": "2h 45min",
+  "MAD-AMS": "2h 40min",
+  "MAD-IST": "4h",
+  "MAD-DOH": "6h 45min",
+  "MAD-LAX": "12h",
+  "MAD-ORD": "10h 30min",
+  "MAD-YYZ": "9h",
+  "MAD-ICN": "14h",
+  "MAD-LIS": "1h 20min",
+  "MAD-VIE": "3h",
+  "MAD-BRU": "2h 20min",
+  "MAD-MUC": "3h",
+  "MAD-ZRH": "2h 50min",
+  "MAD-FCO": "2h 40min",
+  "MAD-MXP": "2h 30min",
+  "MAD-GVA": "2h 30min",
+  "BCN-NRT": "13h",
+  "BCN-LAX": "12h",
+  "BCN-JFK": "9h",
+  "BCN-MIA": "10h",
+  "BCN-DXB": "7h",
+  "BCN-SIN": "13h 30min",
+  "BCN-GRU": "11h",
+  "BCN-BOG": "11h",
+  "BCN-BKK": "11h",
+  "BCN-ICN": "13h 30min",
+  "BCN-IST": "3h 30min",
+  "BCN-LHR": "2h",
+  "BCN-CDG": "1h 50min",
+  "BOG-MAD": "10h 30min",
+  "MEX-MAD": "11h 30min",
+  "EZE-MAD": "13h",
+  "GRU-MAD": "10h 15min",
+  "LIM-MAD": "12h",
+  "SCL-MAD": "13h 30min",
+  "MIA-MAD": "9h 45min",
+}
+
+export function getFlightDuration(origin: string, destination: string): string | null {
+  return (
+    FLIGHT_DURATIONS[`${origin}-${destination}`] ||
+    FLIGHT_DURATIONS[`${destination}-${origin}`] ||
+    null
+  )
+}

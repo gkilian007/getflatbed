@@ -3,6 +3,9 @@ import { scrapeSecretFlying } from "./secret-flying"
 import { scrapeFlightDeal } from "./flight-deal"
 import { scrapeTwitterDeals } from "./twitter-deals"
 import { scrapeAmadeusDeals } from "./amadeus"
+import { scrapeTravelPirates } from "./travel-pirates"
+import { scrapeFareDetective } from "./fare-detective"
+import { scrapeGoogleAlerts } from "./google-alerts"
 
 export type { ScrapedDeal }
 
@@ -12,24 +15,38 @@ export interface ScrapeResult {
   sources: Record<string, number>
 }
 
+// Normalize city/IATA name for dedup comparison
+function normalizeLocation(loc: string): string {
+  return loc.toUpperCase().trim()
+}
+
+// Normalize airline name for dedup comparison
+function normalizeAirline(airline: string): string {
+  return airline.toLowerCase().replace(/\s+/g, " ").trim()
+}
+
 // Run all scrapers and combine results
 export async function runAllScrapers(): Promise<ScrapeResult> {
   const errors: string[] = []
   const sources: Record<string, number> = {}
 
-  const results = await Promise.allSettled([
-    scrapeSecretFlying(),
-    scrapeFlightDeal(),
-    scrapeTwitterDeals(),
-    scrapeAmadeusDeals(),
-  ])
+  const scrapers = [
+    { name: "secretflying", fn: scrapeSecretFlying },
+    { name: "theflightdeal", fn: scrapeFlightDeal },
+    { name: "travelpirates", fn: scrapeTravelPirates },
+    { name: "faredetective", fn: scrapeFareDetective },
+    { name: "google_news", fn: scrapeGoogleAlerts },
+    { name: "twitter", fn: scrapeTwitterDeals },
+    { name: "amadeus", fn: scrapeAmadeusDeals },
+  ]
 
-  const scraperNames = ["secretflying", "theflightdeal", "twitter", "amadeus"]
+  const results = await Promise.allSettled(scrapers.map((s) => s.fn()))
+
   const allDeals: ScrapedDeal[] = []
 
   for (let i = 0; i < results.length; i++) {
     const result = results[i]
-    const name = scraperNames[i]
+    const name = scrapers[i].name
 
     if (result.status === "fulfilled") {
       const deals = result.value
@@ -44,9 +61,10 @@ export async function runAllScrapers(): Promise<ScrapeResult> {
   }
 
   // Deduplicate: same origin+destination+airline within scraped batch
+  // Use normalized keys to catch variants
   const seen = new Set<string>()
   const deduplicated = allDeals.filter((deal) => {
-    const key = `${deal.origin}-${deal.destination}-${deal.airline}`.toLowerCase()
+    const key = `${normalizeLocation(deal.origin)}-${normalizeLocation(deal.destination)}-${normalizeAirline(deal.airline)}`
     if (seen.has(key)) return false
     seen.add(key)
     return true
