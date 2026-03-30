@@ -2,7 +2,11 @@ import { Resend } from "resend"
 
 const resend = new Resend(process.env.RESEND_API_KEY || "re_placeholder")
 
-const FROM = "GetFlatbed <alerts@getflatbed.com>"
+const FROM = process.env.RESEND_FROM_EMAIL
+  ? `GetFlatbed <${process.env.RESEND_FROM_EMAIL}>`
+  : "GetFlatbed <deals@getflatbed.com>"
+
+const SITE_URL = "https://getflatbed.com"
 
 export async function sendWelcomeEmail(email: string, name: string): Promise<void> {
   if (!process.env.RESEND_API_KEY) return
@@ -19,25 +23,28 @@ export async function sendWelcomeEmail(email: string, name: string): Promise<voi
 }
 
 export async function sendDealAlert(email: string, deal: {
+  id: string
   type: string
   origin: string
   destination: string
   airline: string
   price_original: number
   price_deal: number
-  savings_pct: number
+  savings_pct: number | null
   dates_available: string
+  affiliate_url?: string | null
 }): Promise<void> {
   if (!process.env.RESEND_API_KEY) return
   try {
+    const savingsText = deal.savings_pct ? `${deal.savings_pct}% dto.` : "oferta especial"
     await resend.emails.send({
       from: FROM,
       to: email,
-      subject: `🔥 New Deal: ${deal.origin} → ${deal.destination} (${deal.savings_pct}% off)`,
+      subject: `🔥 ${deal.origin} → ${deal.destination} en Business — ${savingsText}`,
       html: dealAlertHtml(deal),
     })
-  } catch {
-    // Silent fail
+  } catch (err) {
+    console.error("Email send failed:", err)
   }
 }
 
@@ -75,7 +82,7 @@ function baseLayout(content: string): string {
         </td></tr>
         <!-- Footer -->
         <tr><td style="padding-top:24px;text-align:center;color:#444;font-size:12px;">
-          © 2026 GetFlatbed · <a href="https://getflatbed.vercel.app" style="color:#666;">getflatbed.vercel.app</a>
+          © 2026 GetFlatbed · <a href="${SITE_URL}" style="color:#666;">getflatbed.com</a>
         </td></tr>
       </table>
     </td></tr>
@@ -87,46 +94,54 @@ function baseLayout(content: string): string {
 function welcomeHtml(name: string): string {
   return baseLayout(`
     <h1 style="margin:0 0 8px;font-size:28px;font-weight:900;color:#fff;">
-      Welcome, ${name}! ✈️
+      ¡Bienvenido, ${name}! ✈️
     </h1>
     <p style="margin:0 0 24px;color:#888;font-size:16px;">
-      You're now part of the GetFlatbed community — we hunt the best flight deals so you don't have to.
+      Ya formas parte de GetFlatbed — buscamos las mejores ofertas de vuelos en business class para que tú no tengas que hacerlo.
     </p>
     <div style="background:rgba(245,200,66,0.06);border:1px solid rgba(245,200,66,0.2);border-radius:12px;padding:24px;margin-bottom:24px;">
-      <p style="margin:0 0 12px;color:#f5c842;font-weight:700;font-size:14px;">What you get:</p>
-      <p style="margin:0 0 8px;color:#ccc;font-size:14px;">⚡ Error fares — up to 95% off business class</p>
-      <p style="margin:0 0 8px;color:#ccc;font-size:14px;">🏆 Miles deals — top-value award redemptions</p>
-      <p style="margin:0 0 8px;color:#ccc;font-size:14px;">🔔 Flash sales — time-sensitive discounts</p>
-      <p style="margin:0;color:#ccc;font-size:14px;">📱 Telegram alerts — instant notifications</p>
+      <p style="margin:0 0 12px;color:#f5c842;font-weight:700;font-size:14px;">Lo que recibirás:</p>
+      <p style="margin:0 0 8px;color:#ccc;font-size:14px;">⚡ Tarifas error — hasta 90% de descuento en business class</p>
+      <p style="margin:0 0 8px;color:#ccc;font-size:14px;">🏆 Ofertas con millas — canjes con valor excepcional</p>
+      <p style="margin:0 0 8px;color:#ccc;font-size:14px;">🔔 Flash sales — promociones relámpago de aerolíneas</p>
+      <p style="margin:0;color:#ccc;font-size:14px;">📱 Alertas por Telegram — notificaciones al instante</p>
     </div>
-    <a href="https://getflatbed.vercel.app/dashboard"
+    <a href="${SITE_URL}/dashboard"
        style="display:inline-block;background:linear-gradient(135deg,#f5c842,#e6a817);color:#000;font-weight:900;font-size:16px;padding:14px 32px;border-radius:8px;text-decoration:none;">
-      Go to Dashboard →
+      Ir al Dashboard →
     </a>
   `)
 }
 
 function dealAlertHtml(deal: {
+  id: string
   type: string
   origin: string
   destination: string
   airline: string
   price_original: number
   price_deal: number
-  savings_pct: number
+  savings_pct: number | null
   dates_available: string
+  affiliate_url?: string | null
 }): string {
   const typeLabels: Record<string, string> = {
-    error_fare: "⚡ Error Fare",
-    miles: "🏆 Miles Deal",
+    error_fare: "⚡ Tarifa Error",
+    miles: "🏆 Oferta Millas",
     flash_sale: "🔔 Flash Sale",
-    voucher: "💳 Voucher",
+    voucher: "💳 Upgrade/Voucher",
   }
-  const label = typeLabels[deal.type] || "✈️ Deal"
+  const label = typeLabels[deal.type] || "✈️ Oferta"
   const price =
     deal.type === "miles"
-      ? `${Number(deal.price_deal).toLocaleString()} pts`
+      ? `${Number(deal.price_deal).toLocaleString()} millas`
       : `€${Number(deal.price_deal).toLocaleString()}`
+  const savingsLine = deal.savings_pct
+    ? `<p style="margin:0 0 24px;color:#4ade80;font-size:18px;font-weight:700;">${deal.savings_pct}% de descuento</p>`
+    : ""
+
+  const ctaUrl = deal.affiliate_url || `${SITE_URL}/deals/${deal.id}`
+  const ctaText = deal.affiliate_url ? "Reservar ahora →" : "Ver oferta →"
 
   return baseLayout(`
     <p style="margin:0 0 16px;display:inline-block;background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.3);color:#f5c842;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;">${label}</p>
@@ -134,18 +149,23 @@ function dealAlertHtml(deal: {
       ${deal.origin} → ${deal.destination}
     </h1>
     <p style="margin:0 0 24px;color:#888;font-size:16px;">${deal.airline} · Business Class</p>
-    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:8px;">
+    <div style="margin-bottom:8px;">
       <span style="font-size:40px;font-weight:900;color:#f5c842;">${price}</span>
-      <span style="font-size:18px;color:#555;text-decoration:line-through;">€${Number(deal.price_original).toLocaleString()}</span>
+      <span style="font-size:18px;color:#555;text-decoration:line-through;margin-left:12px;">€${Number(deal.price_original).toLocaleString()}</span>
     </div>
-    <p style="margin:0 0 24px;color:#4ade80;font-size:18px;font-weight:700;">${deal.savings_pct}% savings</p>
+    ${savingsLine}
     <p style="margin:0 0 24px;color:#666;font-size:14px;">📅 ${deal.dates_available}</p>
-    <a href="https://getflatbed.vercel.app/deals"
-       style="display:inline-block;background:linear-gradient(135deg,#f5c842,#e6a817);color:#000;font-weight:900;font-size:16px;padding:14px 32px;border-radius:8px;text-decoration:none;">
-      View Deal →
+    <a href="${ctaUrl}"
+       style="display:inline-block;background:linear-gradient(135deg,#f5c842,#e6a817);color:#000;font-weight:900;font-size:16px;padding:14px 32px;border-radius:8px;text-decoration:none;margin-bottom:12px;">
+      ${ctaText}
+    </a>
+    <br/>
+    <a href="${SITE_URL}/deals/${deal.id}"
+       style="display:inline-block;color:#f5c842;font-size:14px;margin-top:12px;text-decoration:underline;">
+      Ver detalles en GetFlatbed →
     </a>
     <p style="margin:24px 0 0;color:#555;font-size:12px;">
-      This deal may expire soon. Prices subject to change.
+      Esta oferta puede expirar pronto. Precios sujetos a cambios.
     </p>
   `)
 }
@@ -153,21 +173,21 @@ function dealAlertHtml(deal: {
 function upgradePromptHtml(): string {
   return baseLayout(`
     <h1 style="margin:0 0 8px;font-size:28px;font-weight:900;color:#fff;">
-      You're missing exclusive deals 🔒
+      Te estás perdiendo ofertas exclusivas 🔒
     </h1>
     <p style="margin:0 0 24px;color:#888;font-size:16px;">
-      Premium members are getting real-time alerts on error fares and exclusive business class deals.
+      Los miembros Premium reciben alertas instantáneas de tarifas error y ofertas exclusivas de business class.
     </p>
     <div style="background:rgba(245,200,66,0.06);border:1px solid rgba(245,200,66,0.2);border-radius:12px;padding:24px;margin-bottom:24px;">
-      <p style="margin:0 0 12px;color:#f5c842;font-weight:700;font-size:16px;">Premium includes:</p>
-      <p style="margin:0 0 8px;color:#ccc;font-size:14px;">📱 Instant Telegram + email alerts</p>
-      <p style="margin:0 0 8px;color:#ccc;font-size:14px;">⚡ Access to all error fares (free users see 48h delay)</p>
-      <p style="margin:0 0 8px;color:#ccc;font-size:14px;">🏆 Exclusive miles redemption tips</p>
-      <p style="margin:0;color:#f5c842;font-size:15px;font-weight:700;">Only €9/month</p>
+      <p style="margin:0 0 12px;color:#f5c842;font-weight:700;font-size:16px;">Premium incluye:</p>
+      <p style="margin:0 0 8px;color:#ccc;font-size:14px;">📱 Alertas instantáneas por Telegram + email</p>
+      <p style="margin:0 0 8px;color:#ccc;font-size:14px;">⚡ Acceso a todas las tarifas error (usuarios gratis ven 48h después)</p>
+      <p style="margin:0 0 8px;color:#ccc;font-size:14px;">🏆 Tips exclusivos de canje de millas</p>
+      <p style="margin:0;color:#f5c842;font-size:15px;font-weight:700;">Solo €9/mes</p>
     </div>
-    <a href="https://getflatbed.vercel.app/pricing"
+    <a href="${SITE_URL}/pricing"
        style="display:inline-block;background:linear-gradient(135deg,#f5c842,#e6a817);color:#000;font-weight:900;font-size:16px;padding:14px 32px;border-radius:8px;text-decoration:none;">
-      Upgrade to Premium →
+      Hazte Premium →
     </a>
   `)
 }
