@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { createClient } from "@supabase/supabase-js"
 import { sendTelegramMessage, formatDealMessage } from "@/lib/telegram"
 import { sendDealAlert } from "@/lib/email"
+import { generateBookingLink } from "@/lib/deep-links"
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -49,6 +50,16 @@ export async function POST(req: NextRequest) {
 
   if (error || !deal) {
     return NextResponse.json({ error: error?.message || "Insert failed" }, { status: 500 })
+  }
+
+  // If no affiliate_url provided, auto-generate a deep link to the airline booking page
+  if (!deal.affiliate_url) {
+    const autoLink = generateBookingLink(deal)
+    await supabase
+      .from("deals")
+      .update({ affiliate_url: autoLink })
+      .eq("id", deal.id)
+    deal.affiliate_url = autoLink
   }
 
   // Notify all premium users
