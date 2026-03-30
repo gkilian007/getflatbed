@@ -58,11 +58,11 @@ export async function POST(req: NextRequest) {
     .eq("plan", "premium")
 
   if (premiumUsers) {
-    const message = formatDealMessage(deal)
+    const { text, buttons } = formatDealMessage(deal)
     const notifications = premiumUsers.map(async (user) => {
       const promises: Promise<void>[] = []
       if (user.telegram_chat_id) {
-        promises.push(sendTelegramMessage(user.telegram_chat_id, message))
+        promises.push(sendTelegramMessage(user.telegram_chat_id, text, buttons))
       }
       if (user.email) {
         promises.push(sendDealAlert(user.email, deal))

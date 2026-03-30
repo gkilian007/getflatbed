@@ -87,7 +87,8 @@ Other commands:
       }
 
       for (const deal of deals) {
-        await sendTelegramMessage(chatId, formatDealMessage(deal))
+        const { text: msg, buttons } = formatDealMessage(deal)
+        await sendTelegramMessage(chatId, msg, buttons)
       }
       return NextResponse.json({ ok: true })
     }
