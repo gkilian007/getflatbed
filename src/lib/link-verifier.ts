@@ -94,6 +94,34 @@ export async function verifyLink(url: string): Promise<VerificationResult> {
     }
   }
 
+  // Trusted deal source domains — skip HTTP check, trust URL pattern
+  const TRUSTED_DEAL_SOURCES = [
+    "secretflying.com",
+    "theflightdeal.com",
+    "travelpirates.com",
+    "flyertalk.com",
+    "onemileatatime.com",
+    "thepointsguy.com",
+    "headforpoints.com",
+    "frequentmiler.com",
+    "premium.theflightdeal.com",
+    "google.com/travel/flights",
+  ]
+
+  const urlLower = url.toLowerCase()
+  const isTrustedSource = TRUSTED_DEAL_SOURCES.some((domain) => urlLower.includes(domain))
+  
+  if (isTrustedSource && isSpecificPage(url)) {
+    return {
+      valid: true,
+      url,
+      finalUrl: url,
+      httpStatus: 200, // assumed
+      isHomepage: false,
+      isSpecific: true,
+    }
+  }
+
   try {
     const controller = new AbortController()
     const timeout = setTimeout(() => controller.abort(), 10000)
