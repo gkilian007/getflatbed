@@ -3,6 +3,7 @@ import { createClient } from "@supabase/supabase-js"
 import { runAllScrapers, isDuplicateDeal } from "@/lib/scrapers"
 import { sendTelegramMessage, formatDealMessage } from "@/lib/telegram"
 import { sendDealAlert } from "@/lib/email"
+import { validateDealLink } from "@/lib/link-verifier"
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -90,6 +91,19 @@ export async function GET(req: NextRequest) {
           console.error("[CronScrape]", msg)
           summary.errors.push(msg)
           continue
+        }
+
+        // VERIFY link before sending to users
+        const linkResult = await validateDealLink(deal.affiliate_url, deal)
+        if (linkResult.url !== deal.affiliate_url) {
+          await supabase
+            .from("deals")
+            .update({ affiliate_url: linkResult.url })
+            .eq("id", deal.id)
+          deal.affiliate_url = linkResult.url
+        }
+        if (linkResult.warning) {
+          console.warn("[CronScrape] Link warning:", linkResult.warning)
         }
 
         console.log(

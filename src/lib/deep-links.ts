@@ -58,7 +58,7 @@ function parseDatesFromAvailable(datesAvailable: string): { departDate: string; 
 export function generateBookingLink(deal: {
   origin: string
   destination: string
-  airline: string
+  airline?: string
   dates_available: string | null
 }): string {
   const { departDate, returnDate } = parseDatesFromAvailable(deal.dates_available || "Sep 2026")
